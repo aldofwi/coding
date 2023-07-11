@@ -12,6 +12,10 @@
 
 [![Doc](https://img.shields.io/badge/App-Coding-blue)](http://aldofwi.github.io)
 
+
+## Coding 💻
+Epreuves Coding Accelerator 
+
 ## Description 📝
 
 This is a repo containing exercices.
@@ -27,6 +31,3 @@ Following is the Best way to learn.
 ## Fact ♻️
 
 Sharing is caring.
-
-## Coding
-Epreuves Coding Accelerator 
