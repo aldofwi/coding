@@ -1,4 +1,6 @@
 
+/** DIVISION */
+
 let noargs = false;
 let msgerr = "erreur.";
 let arg1, arg2;
