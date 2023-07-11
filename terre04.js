@@ -1,3 +1,6 @@
+
+/** PAIR IMPAIR */
+
 let noargs = false;
 let msgerr = "Tu ne me la mettras pas à l'envers.";
 
