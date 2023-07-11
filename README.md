@@ -10,7 +10,7 @@
   <img src="https://img.shields.io/badge/code_style-standardjs-cccc44.svg" alt="code style: standardjs">
 </a>
 
-[![Doc](https://img.shields.io/badge/App-Coding-red)](http://aldofwi.github.io)
+[![Doc](https://img.shields.io/badge/App-Coding-blue)](http://aldofwi.github.io)
 
 ## Description 📝
 
@@ -28,5 +28,5 @@ Following is the Best way to learn.
 
 Sharing is caring.
 
-# Coding
+## Coding
 Epreuves Coding Accelerator 
