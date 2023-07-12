@@ -9,14 +9,14 @@ process.argv.forEach(function(val, index, array) {
     if( array.length === 3 ){
         if (index === 2 ) { 
             arg = +val; 
-            if( arg < 0) noargs = true;
+            if( arg < 0 ) noargs = true;
         }
     } else {
         noargs = true;
     }
 });
 
-if (!noargs) {
+if (!noargs && !isNaN(arg)) {
 
     if(arg === 0) console.log(result);
     else {
