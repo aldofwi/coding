@@ -20,8 +20,9 @@ if( !noargs && !isNaN(arg1) && arg2 >= 0 ) {
     if(arg2 !== 0) {
         result = arg1;
 
-        for(let i=0; i<arg2-1; i++){
-            result *= arg1;
+        for(let i=0; i<arg2; i++){
+
+            result **= arg2;
         }
     }
 
