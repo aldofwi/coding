@@ -16,7 +16,7 @@ process.argv.forEach(function(val, index, array) {
     }
 });
 
-if ( !noargs ) {
+if (!noargs) {
 
     if(arg === 0) console.log(result);
     else {
