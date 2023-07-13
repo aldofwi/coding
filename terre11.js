@@ -21,7 +21,7 @@ minute = time[3]+time[4]; minute = +minute;
 
 if(minute<10) minute='0'+minute;
 
-if( hour<24 && minute<60 ) {
+if( hour>=0 && minute>=0 && hour<24 && minute<60 ) {
 
     if ( hour<12 ) {
         if( hour === 00 ){
