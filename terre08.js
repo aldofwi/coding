@@ -21,7 +21,6 @@ if( !noargs && !isNaN(arg1) && arg2 >= 0 ) {
         result = arg1;
 
         for(let i=1; i<arg2; i++){
-
             result *= arg1;
         }
     }
