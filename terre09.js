@@ -18,12 +18,11 @@ process.argv.forEach(function(val, index, array) {
 
 if (!noargs && !isNaN(arg)) {
 
-    if(arg === 0) console.log(result);
-    else {
+    if(arg !== 0) {
         result = arg ** 0.5;
     }
-
     console.log(result);
+    
 } else {
     console.log(msgerr);
 }
