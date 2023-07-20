@@ -8,10 +8,8 @@ let arg1, arg2;
 process.argv.forEach(function(val, index, array) { 
     
     if( array.length !== 4 ) {
-        
         noargs = true;
     } else {
-
         if (index === 2) { arg1 = val; }
         if (index === 3) { arg2 = val; }
     }
