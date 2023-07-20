@@ -13,12 +13,9 @@ process.argv.forEach(function(val, index, array) {
 if( array.length !== 3 ) {
     noargs = true;
 } else {
-
     let character = process.argv.slice(2)[0];
 
     if(index === 2) {
-        console.log(character);
-
         while(id <= alphabet.length) {
             if(val !== alphabet[id]) noargs = true
             else {
@@ -26,8 +23,6 @@ if( array.length !== 3 ) {
             }
             id++;
         }
-
-        console.log(noargs);
 
         if(!noargs) {
             for(let i=alphabet.indexOf(character); i<alphabet.length; i++){
@@ -40,7 +35,3 @@ if( array.length !== 3 ) {
 
 if(noargs) console.warn(msgerr)
 else console.log(result+"\n");
-
-
-// console.log(character);
-// console.log(alphabet.indexOf(character));
