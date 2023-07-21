@@ -19,7 +19,6 @@ function increasing(trio) {
 for(let i=0; i<numbers.length-2; i++) {
     for(let j=0; j<numbers.length; j++) {
         for(let k=0; k<numbers.length; k++) {
-
             current = [ numbers[i], numbers[j], numbers[k] ];
 
             if( !isTheSame(current) && increasing(current) ) {
