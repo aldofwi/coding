@@ -28,7 +28,8 @@ my_bubble_sort = (tableau) => {
     let current = 0;
     for(let a=tableau.length; a>1; a--) {
         for(let b=0; b<a; b++) {
-
+            // Si le courant est plus grand que le suivant
+            // de la liste, on les échange, etc.
             if(tableau[b] > tableau[b+1]) {
                 current = tableau[b];
                 tableau[b] = tableau[b+1];
