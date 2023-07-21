@@ -37,8 +37,6 @@ if( !noargs && hour>=0 && minute>=0 && hour<24 && minute<60 ) {
         console.log(hour+':'+minute+"PM");
     }
 
-} else {
-    noargs = true;
-}
+} else noargs = true;
 
 if(noargs) console.log(msgerr);
