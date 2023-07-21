@@ -31,6 +31,7 @@ if(process.argv.length === 3 && +arg >= 0) {
     }
 }
 else noargs = true;
+
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
