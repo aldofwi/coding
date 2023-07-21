@@ -11,7 +11,6 @@ process.argv.forEach(function(val, index, array) {
     if( array.length < 3 ) {
         noargs = true;
     } else {
-
         if (index >= 2) { 
             result[index-2] = val;
          }
