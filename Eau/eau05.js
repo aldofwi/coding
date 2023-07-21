@@ -21,7 +21,6 @@ oneContainsTwo = (arg1, arg2) => {
     if( current === arg2 ) return true;
     else return false;
 }
-
 // ERRORS
 // PARSING
 if(process.argv.length === 4) params = process.argv.slice(2);
