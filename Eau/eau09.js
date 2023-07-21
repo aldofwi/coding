@@ -1,9 +1,11 @@
 
 /** MIN & MAX */
+
 let noargs = false;
 const msgerr = "error.";
 let num1=0, num2=0;
 let result = "";
+
 // FUNCTIONS
 checkArgs = () => {
     if(process.argv.length !== 4) noargs = true;
