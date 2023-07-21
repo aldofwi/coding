@@ -17,7 +17,6 @@ process.argv.forEach(function(val, index, array) {
 });
 
 if (!noargs && !isNaN(nombre)) {
-
     if(nombre === 2 || nombre === 3) {
         console.log("Oui, "+ nombre+" est un nombre premier.");
     } else if(  nombre === 0 || nombre === 1 || nombre%2 === 0 || 
@@ -26,7 +25,6 @@ if (!noargs && !isNaN(nombre)) {
     } else {
         console.log("Oui, "+ nombre+" est un nombre premier.");
     }
-
 } else {
     console.log(msgerr);
 }
