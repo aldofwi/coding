@@ -22,7 +22,6 @@ upperFirstLetter = (param) => {
 // PARSING
 if(process.argv.length !== 3) noargs = true;
 let arg = process.argv.slice(2)[0];
-console.log("arg.length", arg.length);
 // ERRORS
 if( +arg >= 0) noargs = true;
 else upperFirstLetter(arg);
