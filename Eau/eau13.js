@@ -23,12 +23,11 @@ checkArgs = (args) => {
     }
 }
 
-my_bubble_sort = (tableau) => {
+my_select_sort = (tableau) => {
 
     let current = 0; // let min;
     for(let a=0; a<tableau.length-1; a++) {
         for(let b=a+1; b<tableau.length; b++) {
-
             // Si suivant est plus petit que le premier
             // de la liste, On les échange, etc.
             if(tableau[b] < tableau[a]) {
@@ -54,4 +53,4 @@ checkArgs(myArgs);
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
-else console.log(my_bubble_sort(nbs));
+else console.log(my_select_sort(nbs));
