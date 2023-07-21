@@ -29,7 +29,6 @@ for(let i=0; i<nombres.length; i++) {
     for(let j=0; j<nombres.length; j++) {
 
         if( !isTheSame(nombres[i], nombres[j]) && increasing(nombres[i], nombres[j])) {
-
             result[index2] = nombres[i]+' '+nombres[j];
             index2++;
         }
