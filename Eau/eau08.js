@@ -9,9 +9,8 @@ let current= ""; let result = '';
 // ERRORS
 // PARSING
 if(process.argv.length !== 3) noargs = true;
-else {
-    arg = process.argv.slice(2)[0];
-}
+else arg = process.argv.slice(2)[0];
+
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
