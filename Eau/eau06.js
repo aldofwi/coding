@@ -36,6 +36,7 @@ upperHalfLetters = (param) => {
 // PARSING
 let arg = process.argv.slice(2)[0];
 if(process.argv.length !== 3 || +arg>=0) noargs = true;
+
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
