@@ -12,9 +12,7 @@ process.argv.forEach(function(val, index, array) {
             arg[index-2] = +val;
             if(isNaN(arg[index-2])) noargs = true;
         }
-    } else {
-        noargs = true;
-    }
+    } else noargs = true;
 });
 
 if( arg[0] === arg[1] || arg[1] === arg[2] || arg[0] === arg[2] ) {
@@ -22,7 +20,6 @@ if( arg[0] === arg[1] || arg[1] === arg[2] || arg[0] === arg[2] ) {
 }
 
 if ( !noargs ) {
-
     result = arg;
 
     for(let j=0; j<arg.length; j++) {
