@@ -20,7 +20,6 @@ process.argv.forEach(function(val, index, array) {
 for(let i=1; i<arg.length; i++) {
 
     if(arg[i-1] < arg[i]) {
-
         sorted = true;
     } else {
         sorted = false;
@@ -33,7 +32,6 @@ if( !sorted ) {
     for(let k=1; k<arg.length; k++) {
 
         if(arg[k-1] > arg[k]) {
-    
             sorted = true;
         } else {
             sorted = false;
@@ -44,7 +42,6 @@ if( !sorted ) {
 
 if (noargs) console.log(msgerr)
 else {
-    // console.log(arg);
     if (sorted) console.log("\n Triée !");
     else console.log("\n Pas triée !");
 }
