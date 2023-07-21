@@ -16,7 +16,6 @@ process.argv.forEach(function(val, index, array) {
 });
 
 if( !noargs && !isNaN(arg1) && arg2 >= 0 ) {
-
     if(arg2 !== 0) {
         result = arg1;
 
@@ -24,7 +23,6 @@ if( !noargs && !isNaN(arg1) && arg2 >= 0 ) {
             result *= arg1;
         }
     }
-
     console.log(result);
 } else {
     console.log(msgerr);
