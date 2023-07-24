@@ -29,11 +29,8 @@ if( !noargs && hour>=0 && minute>=0 && hour<24 && minute<60 ) {
         } else {
             console.log(hour+':'+minute+"AM");
         }
-    } 
-    else if( hour === 12 ) {
-        console.log(hour+':'+minute+"PM");
     } else {
-        hour=hour-12;
+        if(hour>12) hour=hour-12;
         console.log(hour+':'+minute+"PM");
     }
 
