@@ -38,7 +38,7 @@ displayTab = (tableau) => {
 // PARSING
 let arg = process.argv.slice(2);
 noargs = checkArgs(arg);
-cuttingParam(arg[0], sep);
+if(!noargs) cuttingParam(arg[0], sep);
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
