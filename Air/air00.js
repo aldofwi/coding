@@ -34,7 +34,6 @@ displayTab = (tableau) => {
         }
     } else noargs = true;
 }
-
 // ERRORS
 // PARSING
 let arg = process.argv.slice(2);
