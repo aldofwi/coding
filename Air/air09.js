@@ -3,7 +3,6 @@
 
 const msgerr = "error.";
 let noargs = false;
-let operation = "";
 let result = "";
 
 // FUNCTIONS
