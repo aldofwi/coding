@@ -1,6 +1,7 @@
 
 /** META */
 
+const {exec} = require("child_process");
 const fs = require("fs");
 const msgerr = "error.";
 let noargs = false;
@@ -8,16 +9,16 @@ let noargs = false;
 let current = process.argv.slice(1)[0];
 let currentFile = current.slice(current.length-8, current.length);
 let currentFolder = current.slice(0, current.length-8);
+let currentCall = current.slice(current.length-12, current.length);
 
 console.log("------------------------------");
+console.log("currentCall :", currentCall);
 console.log("currentFile :", currentFile);
 console.log("currentFolder :", currentFolder);
 console.log("------------------------------");
 
 // FUNCTIONS
-validateArgs = (args) => {
-    return args.length !== 0 ;
-}
+validateArgs = (args) => { return args.length !== 0; }
 
 checkPresence = () => {
 
@@ -31,9 +32,6 @@ checkPresence = () => {
                 if(err) console.warn("File "+title+i+".js missing !");
                 else console.log(title+i+".js exists.");
             });
-
-            fs.
-
         } else {
             fs.open(currentFolder+title1+i+".js", 'r', (err, data) => {
                 if(err) console.error("File "+title1+i+".js missing !");
@@ -41,9 +39,29 @@ checkPresence = () => {
             });
         }
     }
-    console.log("------------------------------");
 
+    exec('npm --version', (error, stdout, stderr) => {
+        console.log("------------------------------");
+        console.log(`npm --version ${stdout.trim()}`);
+        console.log("------------------------------");
+    });
+
+    launchScript();
     
+}
+
+launchScript = () => {
+
+    let param = "Bonjour les gars";
+
+    exec(`node Air/air00.js "${param}"`, (error, stdout, stderr) => {
+        console.log("\n------------------------------");
+        console.log(`Result Split :\n${stdout}`);
+        console.log("\n------------------------------");
+        console.log(`Error Split : ${stderr.trim()}`);
+        console.log("\n------------------------------");
+    });
+
 }
 
 // ERRORS
