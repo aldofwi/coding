@@ -51,12 +51,15 @@ checkPresence = () => {
 }
 
 launchScript = () => {
+    
+    let extension = ".js";
+    let body = currentCall.slice(0, currentCall.length-5)+"01"+extension;
+    let param = "Bonjour les gars ";
+    let param1 = "les";
 
-    let param = "Bonjour les gars";
-
-    exec(`node Air/air00.js "${param}"`, (error, stdout, stderr) => {
+    exec(`node "${body}" "${param}" "${param1}"`, (error, stdout, stderr) => {
         console.log("\n------------------------------");
-        console.log(`Result Split :\n${stdout}`);
+        console.log(`Result PG :\n${stdout}`);
         console.log("\n------------------------------");
         console.log(`Error Split : ${stderr.trim()}`);
         console.log("\n------------------------------");
