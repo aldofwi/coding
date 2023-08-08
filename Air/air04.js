@@ -12,7 +12,6 @@ checkArgs = (args) => { return args.length !== 1; }
 simplifyChain = (param) => {
     
     result += param[0];
-    console.log(param);
 
     for(let a=1; a<param.length; a++) {
 
