@@ -8,9 +8,11 @@ const extension = ".js";
 let noargs = false;
 let myParamsEntry = [
     ["Bonjour les gars"],
-    ["Bonjour les gars", "les"],
-    ["Everybody", "wants", "a", "headline", " "],
-    ["1 2 3 4 5 4 3 2 1"],
+    ['"Bonjour les gars"', '"les"'],
+    // [`"Bonjour les gars"`, `"les"`],
+    // [`"`+`Bonjour les gars`+`"`, `"`+`les`+`"`],
+    [`"`+"Everybody"+`"`, `"`+"wants"+`"`, `"`+"a"+`"`, `"`+"headline"+`"`, `"`+" "+`"`],
+    [`"`+"1 2 3 4 5 4 3 2 1"+`"`],
     ["Hiii Guyyyz,     wwwwhats uuup ??"],
     ["10 11 12 20 -5"],
     ["Michel", "Albert", "Thérèse", "Benoît", "t"],
@@ -26,13 +28,15 @@ let myParamsSorty = [
     ["Bonjour\nles\ngars\n"],
     ["Bonjour \ngars\n"],
     ["Everybody wants a headline \n"],
-    ["5 \n"],
+    ["5\n"],
+    ["Hi Guyz, whats up ?\n"],
+
 ];
 
 let current = process.argv.slice(1)[0];
 
 console.log("------------------------------");
-console.log("|           META             |");
+console.log("|           \x1b[31mMETA\x1b[0m             |");
 console.log("------------------------------");
 
 // FUNCTIONS
@@ -64,8 +68,8 @@ checkPresence = () => {
 displayVersion = () => {
 
     exec('npm --version', (error, stdout, stderr) => {
-        console.log("------------------------------");
-        console.log(`npm --version ${stdout.trim()}`);
+        //console.log("------------------------------");
+        console.log(`npm --version \x1b[93m${stdout.trim()} \x1b[0m`);
         console.log("------------------------------");
     });
 }
@@ -77,30 +81,34 @@ launchScripts = () => {
     let body = currentCall.slice(0, currentCall.length-5)+"01"+extension;
     let liveParam = "";
 
-    console.log("TAILLE : ", myParamsEntry[2].length);
-
-    for(let i=3; i<4; i++) {
+    for(let i=1; i<2; i++) {
 
         if(i > 9) indice = "";
         body = currentCall.slice(0, currentCall.length-5)+indice+i+extension;
 
         for(let j=0; j<myParamsEntry[i].length; j++) {
-            liveParam += `"`+myParamsEntry[i][j]+`"`;
+            // liveParam += `"`+myParamsEntry[i][j]+`"`;
+            liveParam += myParamsEntry[i][j];
+
             if(j !== myParamsEntry[i].length-1) liveParam += " ";
         }
         
-        console.log("PARAMS : ", liveParam);
-        console.log("SORTY : ", myParamsSorty[3][0]);
+        console.log("TAILLE :", myParamsEntry[i].length);
+        console.log("ENTRY :\n", liveParam);
+        console.log("SORTY :\n", myParamsSorty[i][0]);
 
+        // exec(`node "${body}" "Bonjour les gars" "les"`, (error, stdout, stderr) => {
         exec(`node "${body}" "${liveParam}"`, (error, stdout, stderr) => {
             console.log("------------------------------");
-            console.log(`Result ${body} :\n${stdout}`);
-            console.log("\n------------------------------");
+            console.log(`Result ${body} : STDOUT\n${stdout}`);
+            console.log("------------------------------");
             
-            console.log(stdout);
-            for(let i=0; i<stdout.length; i++) { console.log(i+" "+stdout[i]); }
-            if(stdout === myParamsSorty[2][0]) console.log("SUCCESS");
+            // for(let i=0; i<stdout.length; i++) { console.log(i+" "+stdout[i]); }
+            if(stdout === myParamsSorty[i][0]) console.log("--> \x1b[92mSUCCESS\x1b[0m <--");
+            else console.log("--> \x1b[31mFAILURE\x1b[0m <--");
             
+            console.log(`Error Split : ${stderr.trim()}`);
+
             if(error) {
                 console.log(`Error Split : ${stderr.trim()}`);
                 console.log("\n------------------------------");
