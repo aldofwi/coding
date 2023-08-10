@@ -12,8 +12,8 @@ let done = false;
 validateArgs = (args) => { 
     if(args.length < 3) return true;
 
-    for(let z=1; z<args.length-1; z++) {
-        if(isNaN(args[z-1]) || args[z] < args[z-1]) return true;
+    for(let z=0; z<args.length-2; z++) {
+        if(isNaN(args[z]) || +args[z+1] < +args[z]) return true;
     }
     insert = +args[args.length-1];
 }
