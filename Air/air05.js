@@ -5,6 +5,7 @@ const msgerr = "error.";
 let noargs = false;
 let operation = "";
 let resultat = "";
+let entierOp = "";
 
 // FUNCTIONS
 validateArgs = (args) => {
@@ -24,14 +25,19 @@ calulateRes = (args) => {
 
     let numbers = [];
     let result = [];
+    
+    for(let i=1; i<operation.length; i++) {
+        entierOp += operation[i];
+    }
+    entierOp = +entierOp;
 
     for(let b=0; b<args.length-1; b++) {
         numbers.push(+args[b]);
     }
 
     for(let c=0; c<args.length-1; c++) {
-        if(operation[0] === '-') result.push(numbers[c]-operation[1]);
-        else if(operation[0] === '+') result.push(numbers[c]+(+operation[1])); 
+        if(operation[0] === '-') result.push(numbers[c]-entierOp);
+        else if(operation[0] === '+') result.push(numbers[c]+(+entierOp)); 
     }
 
     for(let d=0; d<args.length-1; d++) {
