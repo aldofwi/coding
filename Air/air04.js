@@ -12,10 +12,8 @@ checkArgs = (args) => { return args.length !== 1; }
 simplifyChain = (param) => {
     
     result += param[0];
-
-    for(let a=1; a<param.length; a++) {
-
-        if(param[a] !== param[a-1]) result += param[a];
+    for(let i=1; i<param.length; i++) {
+        if(param[i] !== param[i-1]) result += param[i];
     }
 }
 
