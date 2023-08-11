@@ -11,14 +11,14 @@ let entierOp = "";
 validateArgs = (args) => {
     if(args.length < 2) return true;
 
-    for(let a=0; a<args.length; a++) {
-        if(isNaN(+args[a])) return true;
+    for(let i=0; i<args.length; i++) {
+        if(isNaN(+args[i])) return true;
     }
 }
 
 validateOp = (args) => {
     operation = args[args.length-1];
-    if( (operation.length<2) || (operation[0] !== '+' && operation[0] !== '-') ) return true;
+    if((operation.length<2) || (operation[0] !== '+' && operation[0] !== '-')) return true;
 }
 
 calulateRes = (args) => {
@@ -31,17 +31,17 @@ calulateRes = (args) => {
     }
     entierOp = +entierOp;
 
-    for(let b=0; b<args.length-1; b++) {
-        numbers.push(+args[b]);
+    for(let j=0; j<args.length-1; j++) {
+        numbers.push(+args[j]);
     }
 
-    for(let c=0; c<args.length-1; c++) {
-        if(operation[0] === '-') result.push(numbers[c]-entierOp);
-        else if(operation[0] === '+') result.push(numbers[c]+(+entierOp)); 
+    for(let k=0; k<args.length-1; k++) {
+        if(operation[0] === '-') result.push(numbers[k]-entierOp);
+        else if(operation[0] === '+') result.push(numbers[k]+(+entierOp)); 
     }
 
-    for(let d=0; d<args.length-1; d++) {
-        resultat += result[d] + " ";
+    for(let l=0; l<args.length-1; l++) {
+        resultat += result[l] + " ";
     }
 }
 
