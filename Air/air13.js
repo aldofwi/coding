@@ -162,22 +162,20 @@ checkPresence = () => {
     let currentFolder = current.slice(0, current.length-8);
 
     for(let i=0; i<13; i++) {
-
         if(i<10) {
             fs.open(currentFolder+title+i+".js", 'r', (err, data) => {
                 if(err) {
                     console.warn("File "+title+i+".js missing !"); absence = true;
-                } // else console.log(title+i+".js exists.");
+                }
             });
         } else {
             fs.open(currentFolder+title1+i+".js", 'r', (err, data) => {
                 if(err) {
                     console.error("File "+title1+i+".js missing !"); absence = true;
-                } // else console.log(title1+i+".js exists.");
+                }
             });
         }
     }
-
 }
 
 /** Afficher le taux de réussite */
@@ -207,7 +205,6 @@ buildParams = (number, value) => {
         param += myParams3DEntry[number][value][k];
         if(k !== myParams3DEntry[number][value].length-1) param += " ";
     }
-
     return param;
 }
 
@@ -218,7 +215,6 @@ launchScripts = () => {
     let currentCall = current.slice(current.length-12, current.length);
     let body = currentCall.slice(0, currentCall.length-5)+"01"+extension;
 
-    // for(let i=12; i<13; i++) {
     for(let i=0; i<myParams3DEntry.length; i++) {
         for(let j=0; j<myParams3DEntry[i].length; j++) {
 
@@ -226,17 +222,9 @@ launchScripts = () => {
             else indice = "0";
             body = currentCall.slice(0, currentCall.length-5)+indice+i+extension;
             titre = currentCall.slice(4, currentCall.length-5)+indice+i+extension;
-            /*
-            console.log("TAILLE :", myParamsEntry[i].length);
-            console.log("ENTRY :\n", buildParams(i));
-            console.log("SORTY :\n", myParamsSorty[i][0]);
-            */
 
             exec(`node "${body}" ${buildParams(i,j)}`, (error, stdout, stderr) => {
-                // console.log("------------------------------");
-                // console.log(`Result ${body} : STDOUT\n${stdout}`);
-                // console.log("------------------------------");
-                //for(let i=0; i<stdout.length; i++) { console.log(i+" "+stdout[i]); }
+                
                 if(i > 9) indice = "";
                 else indice = "0";
                 if(stdout === myParams3DSorty[i][j][0]) {
@@ -247,12 +235,6 @@ launchScripts = () => {
                     console.log(currentCall.slice(4, currentCall.length-5)+indice+i+extension,
                     "("+(j+1)+"/"+myParams3DSorty[i].length+")", ": \x1b[31mFailure\x1b[0m");
                 }
-                /*
-                if(stderr) {
-                    console.log(`Error Split : ${stderr.trim()}`);
-                    console.log("\n------------------------------");
-                }
-                */
             });
         }
     }
