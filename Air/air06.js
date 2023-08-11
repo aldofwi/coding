@@ -10,8 +10,8 @@ let tableau = [];
 validateArgs = (args) => { 
     if(args.length < 2) return true; 
 
-    for(let z=0; z<args.length; z++) {
-        if(!isNaN(args[z])) return true;
+    for(let i=0; i<args.length; i++) {
+        if(!isNaN(args[i])) return true;
     }
 }
 
@@ -22,18 +22,18 @@ simplifyArray = (tableau, element) => {
     let word = "";
     let resultab = [];
 
-    for(let a=0; a<tableau.length-1; a++) {
+    for(let i=0; i<tableau.length-1; i++) {
         word = "";
-        current = tableau[a];        
+        current = tableau[i];        
 
-        for(let b=0; b<current.length; b++) {
+        for(let j=0; j<current.length; j++) {
 
             if(current.length >= element.length 
-            && (current.charAt(b) === element.charAt(0).toLowerCase() || current.charAt(b) === element.charAt(0).toUpperCase())
+            && (current.charAt(j) === element.charAt(0).toLowerCase() || current.charAt(j) === element.charAt(0).toUpperCase())
             && !found) {
 
-                for(let c=0; c<element.length; c++) {
-                    word += current.charAt(b+c);
+                for(let k=0; k<element.length; k++) {
+                    word += current.charAt(j+k);
                 }
 
                 if(word === element.toLowerCase() || word === element.toUpperCase()) found = true;
@@ -50,11 +50,10 @@ simplifyArray = (tableau, element) => {
 
 displayTab = (tab) => {
 
-    for(let d=0; d<tab.length; d++) {
-        if(d === tab.length-1) result += tab[d];
-        else result += tab[d] + ", ";
+    for(let i=0; i<tab.length; i++) {
+        if(i === tab.length-1) result += tab[i];
+        else result += tab[i] + ", ";
     }
-
     console.log(result);
 }
 
