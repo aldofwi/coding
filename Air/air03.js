@@ -12,12 +12,12 @@ checkArgs = (args) => { return args.length < 1; }
 findNoPair = (param) => {
 
     let tableau = param;
-    for(let a=0; a<param.length; a++) {
+    for(let i=0; i<param.length; i++) {
         occurence = 0;
-        for(let z=0; z<param.length; z++) {
-            if(tableau[z] === param[a]) occurence++;
+        for(let j=0; j<param.length; j++) {
+            if(tableau[j] === param[i]) occurence++;
         }
-        if(occurence<2) return param[a];
+        if(occurence<2) return param[i];
     }
     if(result === "") noargs = true;
 }
