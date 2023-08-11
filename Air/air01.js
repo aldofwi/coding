@@ -13,21 +13,21 @@ checkArgs = (args) => { return args.length !== 2; }
 
 cuttingParam = (param, separator) => {
 
-    for(let a=0; a<param.length; a++) {
-        for(let b=0; b<separator.length; b++) {
-            if( (param.charAt(a+b) === separator.charAt(b) && current !== "") ) {
-                sep += param.charAt(a+b);
+    for(let i=0; i<param.length; i++) {
+        for(let j=0; j<separator.length; j++) {
+            if( (param.charAt(i+j) === separator.charAt(j) && current !== "") ) {
+                sep += param.charAt(i+j);
             }
         }
 
-        if(sep !== separator) current += param.charAt(a);
+        if(sep !== separator) current += param.charAt(i);
         else {
             tableau.push(current); 
-            a += separator.length;
+            i += separator.length;
             current = ""; 
         }
         sep = "";
-        if( a === param.length-1 ) tableau.push(current);
+        if( i === param.length-1 ) tableau.push(current);
     }
 }
 
