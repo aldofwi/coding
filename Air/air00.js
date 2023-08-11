@@ -29,8 +29,8 @@ cuttingParam = (param, separator) => {
 displayTab = (tableau) => {
 
     if(tableau.length > 0) {
-        for(let c=0; c<tableau.length; c++) {
-            console.log(tableau[c]);
+        for(let i=0; i<tableau.length; i++) {
+            console.log(tableau[i]);
         }
     } else noargs = true;
 }
