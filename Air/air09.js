@@ -13,21 +13,19 @@ validateArgs = (args) => {
 my_rotation = (args) => {
 
     let new_array = [];
-
-    for(let a=1; a<args.length; a++) {
-        new_array.push(args[a]);
+    for(let i=1; i<args.length; i++) {
+        new_array.push(args[i]);
     }
 
     new_array.push(args[0]);
-
     return new_array;
 }
 
 displayTab = (tableau) => {
 
-    for(let d=0; d<tableau.length; d++) {
-        result += tableau[d];
-        if(d !== tableau.length-1) {
+    for(let i=0; i<tableau.length; i++) {
+        result += tableau[i];
+        if(i !== tableau.length-1) {
             result += ", ";
         }
     }
