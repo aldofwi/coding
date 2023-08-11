@@ -10,9 +10,9 @@ checkArgs = (args) => { return args.length < 2; }
 
 cuttingParam = (param, separator) => {
 
-    for(let a=0; a<param.length-1; a++) {  
-        result += param[a];
-        if(a !== param.length-2) result += separator;
+    for(let i=0; i<param.length-1; i++) {  
+        result += param[i];
+        if(i !== param.length-2) result += separator;
     }
     return result;
 }
