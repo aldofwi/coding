@@ -12,28 +12,28 @@ let done = false;
 validateArgs = (args) => { 
     if(args.length < 3) return true;
 
-    for(let z=0; z<args.length-2; z++) {
-        if(isNaN(args[z]) || +args[z+1] < +args[z]) return true;
+    for(let i=0; i<args.length-2; i++) {
+        if(isNaN(args[i]) || +args[i+1] < +args[i]) return true;
     }
     insert = +args[args.length-1];
 }
 
 insertElement = (param, element) => {
 
-    for(let d=0; d<param.length-1; d++) {
-        if(element < +param[d] && !done) {
+    for(let i=0; i<param.length-1; i++) {
+        if(element < +param[i] && !done) {
             tableau.push(element);
             done = true;
         }
-        tableau.push(+param[d]);
+        tableau.push(+param[i]);
     }
     return tableau;
 }
 
 displayTab = (tableau) => {
 
-    for(let d=0; d<tableau.length; d++) {
-        result += tableau[d] + " ";
+    for(let i=0; i<tableau.length; i++) {
+        result += tableau[i] + " ";
     }
     console.log(result);
 }
