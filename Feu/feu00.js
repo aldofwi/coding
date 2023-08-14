@@ -16,7 +16,7 @@ validateArgs = (args) => {
 displayRectangle = (elements, lines) => {
 
     for(let i=0; i<lines; i++) {
-        // Si 1ère ou dernière ligne, on met les bords.
+        // Si première ou dernière ligne, on met les bords.
         if(i === 0 || i === lines-1) {
             result += edge;
             for(let j=0; j<elements-2; j++) {
