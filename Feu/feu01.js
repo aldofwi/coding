@@ -3,7 +3,7 @@
 
 const msgerr = "error.";
 let noargs = false;
-let result = 0;
+let result = "";
 let nbOp = 0;
 
 // FUNCTIONS
@@ -23,21 +23,6 @@ calculate2Nb = (nb1, operation, nb2) => {
     }
 }
 
-defineOp = (formule) => {
-    // console.log(formule.charAt(2));
-    for(let i=0; i<formule.length; i++) {
-
-        if( formule.charAt(i) === "+" ||
-            formule.charAt(i) === "-" || 
-            formule.charAt(i) === "*" || 
-            formule.charAt(i) === "/" || 
-            formule.charAt(i) === "%" ) nbOp++;
-    }
-
-    console.log("nombre d'Op =", nbOp);
-    console.log( calculate2Nb(3, '%', 2) );
-}
-
 // 4 + 21 * (1 - 2 / 2) + 38
 
 searchPriority = (formule) => {
@@ -47,6 +32,7 @@ searchPriority = (formule) => {
     let mark = 0;
     let indexIn = 0;
     let indexOut = 0;
+    let new_number = 0;
     let new_parenthesis = "";
 
     for(let i=0; i<formule.length; i++) {
@@ -64,23 +50,30 @@ searchPriority = (formule) => {
                     mark--;
                 }
                 console.log("mark =", mark);
-                console.log("indexIn =", indexIn);
                 console.log("chiffre =", formule.charAt(mark+1));
+
+                indexIn = mark+1;
 
                 for(let j=mark+1; j<i-1; j++) {
                     num1 += formule.charAt(j);
                 }
+                console.log("indexIn =", indexIn);
                 
                 if(formule.charAt(i+1) === " ") mark = i+2;
                 
                 while(formule.charAt(mark) !== " ") {
                     num2 += formule.charAt(mark);
                     mark++;
+                    indexOut = mark;
                 }
+                console.log("indexOut =", indexOut);
+                new_number = +num1 * +num2;
 
                 console.log("num1 =", +num1);
                 console.log("num2 =", +num2);
                 console.log("Result = ", +num1 * +num2);
+                console.log("Slice =", formule.slice(indexIn, indexOut));
+                console.log("Formule =", formule.replace(formule.slice(indexIn, indexOut), new_number));
 
             }
         }
