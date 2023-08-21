@@ -1,11 +1,10 @@
 
 /** Evaluer une expression */
 
+const operations = ["*", "/", "%", "+", "-"];
 const msgerr = "error.";
 let noargs = false;
 let result = "";
-let nbOp = 0;
-let listOp = [];
 
 // FUNCTIONS
 validateArgs = (args) => {
@@ -24,85 +23,87 @@ calculate2Nb = (nb1, operation, nb2) => {
     }
 }
 
-// 4 + 21 * (1 - 2 / 2) + 38
-// Recherche de Parenthèses
-searchPriority = (formule) => {
+getNbOp = (formule) => {
 
-    let indexOpen = 0;
-    let indexClosed = 0;
-    let parenthesis = false;
-    let new_formula = "";
+    let nb = 0;
+    if(!noargs) {
 
-    for(let i=0; i<formule.length; i++) {
-        if( formule.charAt(i) === "(" ) indexOpen = i;
-        else if ( formule.charAt(i) === ")" ) {
-            indexClosed = i;
-            parenthesis = true;
+        for(let i=0; i<formule.length; i++) {
+
+            if( formule.charAt(i) === "*" ||
+                formule.charAt(i) === "/" ||
+                formule.charAt(i) === "+" ||
+                formule.charAt(i) === "-" ||
+                formule.charAt(i) === "%" ) nb++;
         }
-    }
-    
-    console.log("indexOpen =", indexOpen);
-    console.log("indexClosed =", indexClosed);
-    console.log("searchPriority (formule) -->", formule);
-    new_formula = formule.slice(indexOpen+1, indexClosed);
-    console.log("searchPriority (new_formula) -->", new_formula);
-
-    if(parenthesis) {
-        calculatePriority(new_formula);
-    }
-
+        return nb;
+    }   
 }
 
 calculatePriority = (formule) => {
 
-    let num1 = " ";
-    let num2 = " ";
-    let operation = "";
+    let num1 = "";
+    let num2 = "";
+    let nbOp = 0;
     let mark = 0;
+    let res = 0;
     let indexIn = 0;
     let indexOut = 0;
-    
-    for(let i=0; i<formule.length; i++) {
+    let indexOpen = 0;
+    let indexClosed = 0;
 
-        if( formule.charAt(i) === "*" || formule.charAt(i) === "/") {
-            console.log("searchPriority (startIf) -->", formule);
+    nbOp = getNbOp(formule);
 
-            mark = i-2;
-            operation = formule.charAt(i);
-            while(  formule.charAt(mark) !== " " && mark >= 0 ) {
-                mark--;
+    while(nbOp > 0) {
+        // Tant qu'il y a des op à calculer.
+        for(let i=0; i<formule.length; i++) {
+
+            if( formule.charAt(i) === "(" ) indexOpen = i;
+            else if ( formule.charAt(i) === ")" ) {
+                indexClosed = i;
+                // Si présence de (), On calcule la formule entre parenthèses.
+                res = calculatePriority(formule.slice(indexOpen+1, indexClosed));
+                // On remplace la parenthèse par le résultat obtenu & on continue.
+                formule = formule.replace(formule.slice(indexOpen, indexClosed+1), res);
             }
-            indexIn = mark+1;
-
-            for(let j=mark+1; j<i-1; j++) {
-                num1 += formule.charAt(j);
-            }
-            console.log("indexIn =", indexIn);
-            
-            if( formule.charAt(i+1) === " " ) mark = i+2;
-            
-            while(formule.charAt(mark) !== " " && mark < formule.length) {
-                num2 += formule.charAt(mark);
-                mark++;
-                indexOut = mark;
-            }
-            console.log("indexOut =", indexOut);
-
-            console.log("num1 =", +num1);
-            console.log("num2 =", +num2);
-            console.log("Slice =", formule.slice(indexIn, indexOut));
-            console.log("Formule =", formule.replace(formule.slice(indexIn, indexOut), calculate2Nb(+num1, operation, +num2)));
         }
+        // On parcourt la formule jusqu'à l'op prioritaire.
+        for(let k=0; k<operations.length; k++) {
+            for(let i=0; i<formule.length; i++) {
+                
+                if( formule.charAt(i) === operations[k]) {
+                    mark = i-2;
+                    while( formule.charAt(mark) !== " " && mark >= 0 ) {
+                        mark--;
+                    }
+                    indexIn = mark+1;
+        
+                    for(let j=indexIn; j<i-1; j++) {
+                        num1 += formule.charAt(j);
+                    }
+                    
+                    if( formule.charAt(i+1) === " " ) mark = i+2;
+                    while( formule.charAt(mark) !== " " && mark < formule.length ) {
+                        num2 += formule.charAt(mark);
+                        mark++;
+                        indexOut = mark;
+                    }
+                    // Quand on trouve l'Op prioritaire, on remplace la formule avec le résultat.
+                    formule = formule.replace(formule.slice(indexIn, indexOut), calculate2Nb(+num1, operations[k], +num2));
+                    num1 = "";
+                    num2 = "";
+                }
+            }
+        }
+        nbOp--;
     }
+    return formule;
 }
-
 
 // ERRORS
 // PARSING
-let arg = process.argv.slice(2); 
-noargs = validateArgs(arg);
-if(!noargs) searchPriority(arg[0]);
-
+let arg = process.argv.slice(2);
+if(!noargs) result = calculatePriority(arg[0]);
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
