@@ -8,7 +8,7 @@ let tab1 = [];
 let tab2 = [];
 
 // FUNCTIONS
-validateArgs = (args) => { 
+const validateArgs = (args) => { 
     
     let fusion = false;
     if(args.length < 3) return true;
@@ -24,7 +24,7 @@ validateArgs = (args) => {
     if(!fusion) return true;
 }
 
-createTable = (args) => {
+const createTable = (args) => {
 
     for(let i=0; i<args.length; i++) {
         if(i < index) tab1.push(+args[i]);
@@ -41,7 +41,7 @@ createTable = (args) => {
 
 }
 
-sorted_fusion = (tableau1, tableau2) => {
+const sortedFusion = (tableau1, tableau2) => {
 
     let current = 0;
     let new_array = "";
@@ -79,4 +79,4 @@ if(!noargs) createTable(arg);
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
-else console.log(sorted_fusion(tab1, tab2));
+else console.log(sortedFusion(tab1, tab2));
