@@ -1,17 +1,18 @@
 
 /** Split */
 
+const msgerr = "error.";
 let noargs = false;
 let split = false;
-let msgerr = "error.";
 let sep = [9, 13, 32];
 let tableau = []; 
-let current = "";
 
 // FUNCTIONS
-checkArgs = (args) => { return args.length !== 1; }
+const checkArgs = (args) => { return args.length !== 1; }
 
-cuttingParam = (param, separator) => {
+const cuttingParam = (param, separator) => {
+
+    let current = "";
 
     for(let a=0; a<param.length; a++) {
         for(let b=0; b<sep.length; b++) {
@@ -26,11 +27,11 @@ cuttingParam = (param, separator) => {
     }
 }
 
-displayTab = (tableau) => {
+const displayTab = (tab) => {
 
-    if(tableau.length > 0) {
-        for(let i=0; i<tableau.length; i++) {
-            console.log(tableau[i]);
+    if(tab.length > 0) {
+        for(let i=0; i<tab.length; i++) {
+            console.log(tab[i]);
         }
     } else noargs = true;
 }
