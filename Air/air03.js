@@ -3,14 +3,14 @@
 
 const msgerr = "error.";
 let noargs = false;
-let occurence = 0;
 let result = ""; 
 
 // FUNCTIONS
-checkArgs = (args) => { return args.length < 1; }
+const checkArgs = (args) => { return args.length < 1; }
 
-findNoPair = (param) => {
+const findNoPair = (param) => {
 
+    let occurence = 0;
     let tableau = param;
     for(let i=0; i<param.length; i++) {
         occurence = 0;
