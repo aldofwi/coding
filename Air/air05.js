@@ -5,10 +5,9 @@ const msgerr = "error.";
 let noargs = false;
 let operation = "";
 let resultat = "";
-let entierOp = "";
 
 // FUNCTIONS
-validateArgs = (args) => {
+const validateArgs = (args) => {
     if(args.length < 2) return true;
 
     for(let i=0; i<args.length; i++) {
@@ -16,16 +15,17 @@ validateArgs = (args) => {
     }
 }
 
-validateOp = (args) => {
+const validateOp = (args) => {
     operation = args[args.length-1];
     if((operation.length<2) || (operation[0] !== '+' && operation[0] !== '-')) return true;
 }
 
-calulateRes = (args) => {
+const calulateRes = (args) => {
 
+    let entierOp = "";
     let numbers = [];
     let result = [];
-    
+
     for(let i=1; i<operation.length; i++) {
         entierOp += operation[i];
     }
