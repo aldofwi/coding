@@ -6,11 +6,11 @@ let noargs = false;
 let result = "";
 
 // FUNCTIONS
-validateArgs = (args) => {
+const validateArgs = (args) => {
     return args.length < 2;
 }
 
-my_rotation = (args) => {
+const my_rotation = (args) => {
 
     let new_array = [];
     for(let i=1; i<args.length; i++) {
@@ -21,7 +21,7 @@ my_rotation = (args) => {
     return new_array;
 }
 
-displayTab = (tableau) => {
+const displayTab = (tableau) => {
 
     for(let i=0; i<tableau.length; i++) {
         result += tableau[i];
