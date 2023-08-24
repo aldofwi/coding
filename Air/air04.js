@@ -4,12 +4,11 @@
 const msgerr = "error.";
 let noargs = false;
 let result = "";
-let current = '';
 
 // FUNCTIONS
-checkArgs = (args) => { return args.length !== 1; }
+const checkArgs = (args) => { return args.length !== 1; }
 
-simplifyChain = (param) => {
+const simplifyChain = (param) => {
     
     result += param[0];
     for(let i=1; i<param.length; i++) {
