@@ -5,11 +5,11 @@ const msgerr = "error.";
 let noargs = false;
 
 // FUNCTIONS
-validateArgs = (args) => {
+const validateArgs = (args) => {
     return (args.length !== 2 || isNaN(args[1]));
 }
 
-displayPyramide = (element, number) => {
+const displayPyramide = (element, number) => {
 
     let nbLignes = number;
     let nbElement = 0;
