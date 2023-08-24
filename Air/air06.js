@@ -3,11 +3,10 @@
 
 const msgerr = "error.";
 let noargs = false;
-let result = "";
-let tableau = [];
+let myTable = [];
 
 // FUNCTIONS
-validateArgs = (args) => { 
+const validateArgs = (args) => { 
     if(args.length < 2) return true; 
 
     for(let i=0; i<args.length; i++) {
@@ -15,7 +14,7 @@ validateArgs = (args) => {
     }
 }
 
-simplifyArray = (tableau, element) => {
+const simplifyArray = (tableau, element) => {
 
     let found = false;
     let current = "";
@@ -48,8 +47,9 @@ simplifyArray = (tableau, element) => {
     return resultab;
 }
 
-displayTab = (tab) => {
+const displayTab = (tab) => {
 
+    let result = "";
     for(let i=0; i<tab.length; i++) {
         if(i === tab.length-1) result += tab[i];
         else result += tab[i] + ", ";
@@ -61,9 +61,9 @@ displayTab = (tab) => {
 // PARSING
 let arg = process.argv.slice(2); 
 noargs = validateArgs(arg);
-if(!noargs) tableau = simplifyArray(arg, arg[arg.length-1]);
+if(!noargs) myTable = simplifyArray(arg, arg[arg.length-1]);
 
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
-else displayTab(tableau);
+else displayTab(myTable);
