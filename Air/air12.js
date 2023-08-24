@@ -3,11 +3,10 @@
 
 const msgerr = "error.";
 let noargs = false;
-let index = 0;
 let tab = [];
 
 // FUNCTIONS
-validateArgs = (args) => { 
+const validateArgs = (args) => { 
     if(args.length < 2) return true;
     
     for(let i=0; i<args.length; i++) {
@@ -19,14 +18,14 @@ validateArgs = (args) => {
     }
 }
 
-echanger = (tab, a, b) => {
+const swap = (tab, a, b) => {
 
     let temp = tab[a];
     tab[a] = tab[b];
     tab[b] = temp;
 }
 
-myQuickSort = (tableau, debut, fin) => {
+const myQuickSort = (tableau, debut, fin) => {
 
     let gauche = debut;
     let droite = fin;
@@ -40,7 +39,7 @@ myQuickSort = (tableau, debut, fin) => {
         // Vérification des valeurs par rapport au pivot.
         while(tableau[gauche] < pivot) gauche++;
         // Vérification de la position des index.
-        if(gauche < droite) echanger(tableau, gauche, droite);
+        if(gauche < droite) swap(tableau, gauche, droite);
         else break;
     }
 
@@ -50,14 +49,12 @@ myQuickSort = (tableau, debut, fin) => {
     return tableau;
 }
 
-displayTab = (tableau) => {
+const displayTab = (tableau) => {
 
     let new_array = "";
-
     for(let i=0; i<tableau.length; i++) {
         new_array += tableau[i]+" " ;
     }
-
     return new_array;
 }
 
