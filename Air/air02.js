@@ -6,9 +6,9 @@ let noargs = false;
 let result = ""; 
 
 // FUNCTIONS
-checkArgs = (args) => { return args.length < 2; }
+const checkArgs = (args) => { return args.length < 2; }
 
-cuttingParam = (param, separator) => {
+const cuttingParam = (param, separator) => {
 
     for(let i=0; i<param.length-1; i++) {  
         result += param[i];
@@ -17,7 +17,7 @@ cuttingParam = (param, separator) => {
     return result;
 }
 
-displayTab = (res) => {
+const displayTab = (res) => {
     if(res !== "") console.log(res);
     else noargs = true;
 }
