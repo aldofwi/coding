@@ -152,10 +152,10 @@ console.log("|           \x1b[31mMETA\x1b[0m             |");
 console.log("------------------------------");
 
 // FUNCTIONS
-validateArgs = (args) => { return args.length !== 0; }
+const validateArgs = (args) => { return args.length !== 0; }
 
 /** Contrôler la présence des programmes */
-checkPresence = () => {
+const checkPresence = () => {
 
     let title = "air0";
     let title1 = title.slice(0, title.length-1);
@@ -179,7 +179,7 @@ checkPresence = () => {
 }
 
 /** Afficher le taux de réussite */
-displayVersion = () => {
+const displayVersion = () => {
 
     let nbTests = 0;
     for(let i=0; i<myParams3DEntry.length; i++) {
@@ -198,7 +198,7 @@ displayVersion = () => {
 }
 
 /** Construire les paramètres à exécuter */
-buildParams = (number, value) => {
+const buildParams = (number, value) => {
 
     let param = "";
     for(let k=0; k<myParams3DEntry[number][value].length; k++) {
@@ -209,7 +209,7 @@ buildParams = (number, value) => {
 }
 
 /** Lancer les scripts à la chaîne */
-launchScripts = () => {
+const launchScripts = () => {
 
     let indice = "0";
     let currentCall = current.slice(current.length-12, current.length);
