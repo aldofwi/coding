@@ -6,11 +6,11 @@ const msgerr = "error.";
 let noargs = false;
 
 // FUNCTIONS
-validateArgs = (args) => {
+const validateArgs = (args) => {
     return args.length !== 1 ;
 }
 
-displayFile = (fichier) => {
+const displayFile = (fichier) => {
 
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
