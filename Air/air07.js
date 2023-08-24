@@ -6,7 +6,7 @@ let noargs = false;
 let insert = -1;
 
 // FUNCTIONS
-validateArgs = (args) => { 
+const validateArgs = (args) => { 
     if(args.length < 3) return true;
 
     for(let i=0; i<args.length-2; i++) {
@@ -15,7 +15,7 @@ validateArgs = (args) => {
     insert = +args[args.length-1];
 }
 
-insertElement = (param, element) => {
+const insertElement = (param, element) => {
 
     let done = false;
     let tableau = [];
@@ -29,7 +29,7 @@ insertElement = (param, element) => {
     return tableau;
 }
 
-displayTab = (tab) => {
+const displayTab = (tab) => {
 
     let result = "";
     for(let i=0; i<tab.length; i++) {
