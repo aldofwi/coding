@@ -3,10 +3,7 @@
 
 const msgerr = "error.";
 let noargs = false;
-let tableau = [];
 let insert = -1;
-let result = "";
-let done = false;
 
 // FUNCTIONS
 validateArgs = (args) => { 
@@ -20,6 +17,8 @@ validateArgs = (args) => {
 
 insertElement = (param, element) => {
 
+    let done = false;
+    let tableau = [];
     for(let i=0; i<param.length-1; i++) {
         if(element < +param[i] && !done) {
             tableau.push(element);
@@ -30,10 +29,11 @@ insertElement = (param, element) => {
     return tableau;
 }
 
-displayTab = (tableau) => {
+displayTab = (tab) => {
 
-    for(let i=0; i<tableau.length; i++) {
-        result += tableau[i] + " ";
+    let result = "";
+    for(let i=0; i<tab.length; i++) {
+        result += tab[i] + " ";
     }
     console.log(result);
 }
