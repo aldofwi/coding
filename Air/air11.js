@@ -3,9 +3,6 @@
 
 const msgerr = "error.";
 let noargs = false;
-let result = "";
-let nbLignes = 0;
-let nbElement = 0;
 
 // FUNCTIONS
 validateArgs = (args) => {
@@ -13,9 +10,12 @@ validateArgs = (args) => {
 }
 
 displayPyramide = (element, number) => {
-    nbLignes = number;
+
+    let nbLignes = number;
+    let nbElement = 0;
     nbElement++; // nb éléments sur la 1ère ligne
 
+    let result = "";
     for(let i=0; i<nbLignes; i++) {
         number--; // nombre d'espaces préfixés
         for(let j=number; j>0; j--) {
