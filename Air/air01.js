@@ -3,15 +3,15 @@
 
 const msgerr = "error.";
 let noargs = false;
-let split = false;
-let tableau = []; 
-let current = "";
-let sep = "";
+let tableau = [];
 
 // FUNCTIONS
-checkArgs = (args) => { return args.length !== 2; }
+const checkArgs = (args) => { return args.length !== 2; }
 
-cuttingParam = (param, separator) => {
+const cuttingParam = (param, separator) => {
+
+    let sep = "";
+    let current = "";
 
     for(let i=0; i<param.length; i++) {
         for(let j=0; j<separator.length; j++) {
@@ -31,11 +31,11 @@ cuttingParam = (param, separator) => {
     }
 }
 
-displayTab = (tableau) => {
+const displayTab = (tab) => {
 
-    if(tableau.length > 0) {
-        for(let c=0; c<tableau.length; c++) {
-            console.log(tableau[c]);
+    if(tab.length > 0) {
+        for(let c=0; c<tab.length; c++) {
+            console.log(tab[c]);
         }
     } else noargs = true;
 }
