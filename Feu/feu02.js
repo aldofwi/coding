@@ -2,7 +2,7 @@
 /** Trouver la forme */
 
 const fs = require("fs");
-const msgerr = "error.";
+const msgerr = "Introuvable.";
 let noargs = false;
 let result = "";
 
@@ -15,6 +15,10 @@ displayFile = (fichier) => {
 
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
+
+        for(let i=0; i<data.length; i++) {
+            console.log(i, " - ", data[i], " - charCode : ",  data.charCodeAt(i));
+        }
         console.log(data);
     });
 }
@@ -29,4 +33,4 @@ console.log(arg);
 // RESULT
 // DISPLAY
 if(noargs) console.warn(msgerr);
-else displayFile(arg[1]);
+else displayFile(arg[0]);
