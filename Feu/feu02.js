@@ -17,7 +17,7 @@ displayFile = (fichier) => {
         if(err) console.warn(msgerr);
 
         for(let i=0; i<data.length; i++) {
-            console.log(i, " - ", data[i], " - charCode : ",  data.charCodeAt(i));
+            console.log(i, " - ", data[i], " - charCode :",  data.charCodeAt(i));
         }
         console.log(data);
     });
