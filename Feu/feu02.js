@@ -28,7 +28,7 @@ displayFile = (fichier) => {
 let arg = process.argv.slice(2);
 noargs = validateArgs(arg);
 
-console.log(arg);
+//console.log(arg);
 
 // RESULT
 // DISPLAY
