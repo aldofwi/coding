@@ -11,6 +11,8 @@ validateArgs = (args) => {
     return (args.length !== 2); 
 }
 
+// Define Spacing searched
+
 displayFile = (fichier) => {
 
     fs.readFile(fichier, 'utf8', (err, data) => {
