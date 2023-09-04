@@ -17,14 +17,19 @@ const saveShape = (fichier) => {
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
 
-        let j = 0;
+        let line = 0;
+        let col = 0;
         for(let i=0; i<data.length; i++) {
-
-            while(data.charCodeAt(j) !== 10) {
-                shape.push([i,j]);
-                j++;
-            }
             
+            if(data.charCodeAt(i) !== 10 && data.charCodeAt(i) !== 32) {
+                shape.push([data.charCodeAt(i), col, line]);
+                col++;
+            } else if(data.charCodeAt(i) === 10) {
+                line++;
+                col = 0;
+            } else {
+                col++;
+            }
         }
         console.log(shape);
     });
