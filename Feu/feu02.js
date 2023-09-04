@@ -7,13 +7,24 @@ let noargs = false;
 let result = "";
 
 // FUNCTIONS
-validateArgs = (args) => {
+const validateArgs = (args) => {
     return (args.length !== 2); 
 }
 
-// Define Spacing searched
+const saveShape = (fichier) => {
 
-displayFile = (fichier) => {
+}
+
+// Define Spacing searched
+const foundShape = () => {
+
+}
+
+const sendCoordonates = () => {
+
+} 
+
+const displayFile = (fichier) => {
 
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
