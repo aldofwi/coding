@@ -5,6 +5,7 @@ const fs = require("fs");
 const msgerr = "Introuvable.";
 let noargs = false;
 let result = "";
+let found = [];
 let shape = [];
 let board = "";
 
@@ -33,9 +34,11 @@ const saveShape = (fichier) => {
                 col++;
             }
         }
-        console.log("Shape --> ", shape);
+        console.log("Shape -->", shape);
     });
-
+    
+    setTimeout(() => {}, 3000);
+    foundShape(arg[0]);
 }
 
 // Display shape with dashes (-)
@@ -60,17 +63,31 @@ const foundShape = (fichier) => {
 
     let iCol = 0;
     let iLine = 0;
+    let currentShape = shape;
 
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
 
         for(let i=0; i<data.length; i++) {
-            
-            if(data.charCodeAt(i) == shape[0][0]) {
-                console.log("["+i+"]"," --> Eureka!");
+
+            if(data.charCodeAt(i) === shape[0][0]) {
+                
+                console.log("["+i+"]","--> Eureka!\n["+iCol+"]["+iLine+"]");
+
+                // définir la forme courante & check otherz
+                for(let j=0; j<shape.length; j++) {
+                    currentShape[j][1] = shape[j][1]+iCol;
+                    currentShape[j][2] = shape[j][2]+iLine;
+                }
+                console.log("Current Shape -->", currentShape);
+
                 return;
             }
-            
+            iCol++;
+            if(data.charCodeAt(i) === 10) {
+                iLine++;
+                iCol=0;
+            }
         }
         // console.log(data);
     });
@@ -88,5 +105,5 @@ else {
 
     displayFile(arg[0]);
     saveShape(arg[1]);
-    foundShape(arg[0]);
+    // foundShape(arg[0]);
 }
