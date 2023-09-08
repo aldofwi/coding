@@ -4,11 +4,9 @@
 const fs = require("fs");
 const msgerr = "Introuvable.";
 let noargs = false;
-let result = "";
 let frame = [];
 let shape = [];
 let finalShape = [];
-let board = "";
 
 // FUNCTIONS
 const validateArgs = (args) => {
@@ -24,8 +22,9 @@ const saveFrame = (fichier) => {
         frame = [];
         let line = 0;
         let col = 0;
+        // Stocker les coordonnées du périmètre du board.
         for(let i=0; i<data.length; i++) {
-            
+            // Si le caractère n'est ni vide, ni retour chariot, on incrémente.
             if(data.charCodeAt(i) !== 10 && data.charCodeAt(i) !== 32) {
                 col++;
             } else if(data.charCodeAt(i) === 10) {
@@ -36,15 +35,8 @@ const saveFrame = (fichier) => {
                 col++;
             }
         }
-        console.log("saveFrame -->", frame);
-        console.log("frame.length -->", frame.length);
-        console.log("shape -->", finalShape);
-        console.log("final.length -->", finalShape.length);
-        console.log("Coordonnées : "+finalShape[0][1]+","+finalShape[0][2]);
-
         if(frame.length !== 0) displayShape(finalShape);
     });
-    
 }
 
 // Save position of shape points
@@ -55,8 +47,7 @@ const saveShape = (fichier) => {
 
         let line = 0;
         let col = 0;
-        console.log("DATA -->");
-        console.log(data);
+        // Stocker les éléments à trouver & leur position.
         for(let i=0; i<data.length; i++) {
             
             if(data.charCodeAt(i) !== 10 && data.charCodeAt(i) !== 32) {
@@ -69,11 +60,7 @@ const saveShape = (fichier) => {
                 col++;
             }
         }
-        console.log("Shape -->", shape);
     });
-    
-    // setTimeout(() => {}, 3000);
-    
 }
 
 // Display shape with dashes (-)
@@ -81,7 +68,6 @@ const displayShape = (final) => {
 
     let i=0;
     let display = "";
-    // console.log("frame[0][1] -->", frame[0][1]);
 
     while(i<final.length) { // 0 1 2 (éléments à placer)
 
@@ -89,20 +75,21 @@ const displayShape = (final) => {
 
             for(let k=0; k<frame[j][1] ; k++) { // 0 1 2 3 (nb colonnes)
 
-                if(final[i][2] === j && final[i][1] === k) {
+                if(i<final.length && final[i][2] === j && final[i][1] === k) {
 
                     display += String.fromCharCode(final[i][0]);
                     i++;
+                    
                 } else display += "-";
             }
             display += "\n";
         }
     }
-    // console.log("final displayShape -->", final);
-    // console.log("Display :");
+    console.log("Coordonnées : "+finalShape[0][1]+","+finalShape[0][2]);
     console.log(display);
 }
 
+// Display file content one by one.
 const displayFile = (fichier) => {
 
     fs.readFile(fichier, 'utf8', (err, data) => {
@@ -115,7 +102,7 @@ const displayFile = (fichier) => {
     });
 }
 
-// Search shape on the board : OFF
+// Search shape on the board.
 const foundShape = (fichier) => {
 
     let iCol = 0;
@@ -126,13 +113,10 @@ const foundShape = (fichier) => {
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
 
-        console.log(" Shape -->", shape);
-
         for(let i=0; i<data.length; i++) {
-            console.log("i =", i," // found =", found);
+            found = 0;
             if(found < shape.length && data.charCodeAt(i) === shape[found][0]) {
 
-                console.log("["+i+"]","--> First Eureka!\n["+iCol+"]["+iLine+"]");
                 finalShape.push([data.charCodeAt(i), iCol, iLine]);
                 found++;
                 // définir la forme courante & check otherz
@@ -140,37 +124,29 @@ const foundShape = (fichier) => {
                     currentShape[j][1] = shape[j][1]+iCol;
                     currentShape[j][2] = shape[j][2]+iLine;
                 }
-                console.log("Current Shape -->", currentShape);
-                
+
                 let iCol2=iCol;
                 let iLine2=iLine;
                 let ecartCol;
                 let ecartLine;
 
                 for(let k=i+1; k<data.length; k++) {
-                    // Comparaison avec 1er élément trouvé !
+                    // Comparaison avec 1er élément trouvé ! Fixé.
                     ecartCol = shape[found][1]-shape[0][1];
                     ecartLine = shape[found][2]-shape[0][2];
 
-                    console.log("k = "+k+" // found =", found);
-                    console.log("ecartCol =", ecartCol, " // ecartLine =", ecartLine);
-                    
                     // Si le prochain est Retour Chariot ou pas
                     if(data.charCodeAt(k) === 10) {
-                        iCol2=-1;  // 0
-                        iLine2++; // 2
+                        iCol2=-1;
+                        iLine2++;
                     } else iCol2++;
-
-                    console.log("iCol2 =", iCol2, " // iLine2 =", iLine2);
-                    console.log("iCol =", iCol, " // iLine =", iLine);
-                    //                      2      0
+                    
                     if(ecartLine === 0 || iLine2-iLine === ecartLine) {
                         if(iCol2-iCol === ecartCol) {
                             if(data.charCodeAt(k) === currentShape[found][0]) {
                                 
                                 finalShape.push([data.charCodeAt(k), iCol2, iLine2]);
                                 found++;
-                                console.log("["+k+"]","--> Eureka "+found+" !\n["+iCol2+"]["+iLine2+"]");
                                 if(found === shape.length) break;
                             } else {
                                 finalShape = [];
@@ -180,18 +156,18 @@ const foundShape = (fichier) => {
                         }
                     }
                 }
+                if(found === shape.length) break;
             }
             iCol++;
             if(data.charCodeAt(i) === 10) {
                 iLine++;
                 iCol=0;
-                console.log("... Saut de Ligne ...");
             }
         }
 
         if(found < currentShape.length) {
             console.log("Introuvable");
-        } else if(found === currentShape.length) {
+        } else if(found > 0 && found === currentShape.length) {
             console.log("Trouvé !");
             saveFrame(arg[0]);
         }
@@ -207,14 +183,35 @@ noargs = validateArgs(arg);
 // DISPLAY
 if(noargs) console.warn(msgerr);
 else {
-    displayFile(arg[0]);
-    // saveFrame(arg[0]);
-    // setTimeout(() => {}, 3000);
+    // displayFile(arg[0]);
     saveShape(arg[1]);
-    // setTimeout(() => {}, 3000);
     foundShape(arg[0]);
 }
 /*
+
+foundShape();
+
+        console.log(" Shape -->", shape);
+        console.log("i =", i," // found =", found);
+        console.log("["+i+"]","--> First Eureka!\n["+iCol+"]["+iLine+"]");
+        console.log("Current Shape -->", currentShape);
+        console.log("k = "+k+" // found =", found);
+        console.log("ecartCol =", ecartCol, " // ecartLine =", ecartLine);
+        console.log("iCol2 =", iCol2, " // iLine2 =", iLine2);
+        console.log("iCol =", iCol, " // iLine =", iLine);
+        console.log("["+k+"]","--> Eureka "+found+" !\n["+iCol2+"]["+iLine2+"]");
+        console.log("shape.length = ", shape.length);
+        console.log("... Saut de Ligne ...");
+                
+saveFrame();
+
+        console.log("saveFrame -->", frame);
+        console.log("frame.length -->", frame.length);
+        console.log("final -->", finalShape);
+        console.log("final.length -->", finalShape.length);
+        console.log("Coordonnées : "+finalShape[0][1]+","+finalShape[0][2]);
+    
+---- 
                 let iCol2=iCol+1;
                 let iLine2=iLine;
                 for(let k=i+1; k<data.length; k++) {
