@@ -126,10 +126,13 @@ const foundShape = (fichier) => {
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
 
+        console.log(" Shape -->", shape);
+
         for(let i=0; i<data.length; i++) {
-            //console.log("found -->", found);
+            console.log("i =", i," // found =", found);
             if(found < shape.length && data.charCodeAt(i) === shape[found][0]) {
-                // console.log("["+i+"]","--> Eureka!\n["+iCol+"]["+iLine+"]");
+
+                console.log("["+i+"]","--> First Eureka!\n["+iCol+"]["+iLine+"]");
                 finalShape.push([data.charCodeAt(i), iCol, iLine]);
                 found++;
                 // définir la forme courante & check otherz
@@ -138,7 +141,80 @@ const foundShape = (fichier) => {
                     currentShape[j][2] = shape[j][2]+iLine;
                 }
                 console.log("Current Shape -->", currentShape);
+                
+                let iCol2=iCol;
+                let iLine2=iLine;
+                let ecartCol;
+                let ecartLine;
 
+                for(let k=i+1; k<data.length; k++) {
+                    // Comparaison avec 1er élément trouvé !
+                    ecartCol = shape[found][1]-shape[0][1];
+                    ecartLine = shape[found][2]-shape[0][2];
+
+                    console.log("k = "+k+" // found =", found);
+                    console.log("ecartCol =", ecartCol, " // ecartLine =", ecartLine);
+                    
+                    // Si le prochain est Retour Chariot ou pas
+                    if(data.charCodeAt(k) === 10) {
+                        iCol2=-1;  // 0
+                        iLine2++; // 2
+                    } else iCol2++;
+
+                    console.log("iCol2 =", iCol2, " // iLine2 =", iLine2);
+                    console.log("iCol =", iCol, " // iLine =", iLine);
+                    //                      2      0
+                    if(ecartLine === 0 || iLine2-iLine === ecartLine) {
+                        if(iCol2-iCol === ecartCol) {
+                            if(data.charCodeAt(k) === currentShape[found][0]) {
+                                
+                                finalShape.push([data.charCodeAt(k), iCol2, iLine2]);
+                                found++;
+                                console.log("["+k+"]","--> Eureka "+found+" !\n["+iCol2+"]["+iLine2+"]");
+                                if(found === shape.length) break;
+                            } else {
+                                finalShape = [];
+                                found=0;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            iCol++;
+            if(data.charCodeAt(i) === 10) {
+                iLine++;
+                iCol=0;
+                console.log("... Saut de Ligne ...");
+            }
+        }
+
+        if(found < currentShape.length) {
+            console.log("Introuvable");
+        } else if(found === currentShape.length) {
+            console.log("Trouvé !");
+            saveFrame(arg[0]);
+        }
+    });
+}
+
+// ERRORS
+// PARSING
+let arg = process.argv.slice(2);
+noargs = validateArgs(arg);
+
+// RESULT
+// DISPLAY
+if(noargs) console.warn(msgerr);
+else {
+    displayFile(arg[0]);
+    // saveFrame(arg[0]);
+    // setTimeout(() => {}, 3000);
+    saveShape(arg[1]);
+    // setTimeout(() => {}, 3000);
+    foundShape(arg[0]);
+}
+/*
                 let iCol2=iCol+1;
                 let iLine2=iLine;
                 for(let k=i+1; k<data.length; k++) {
@@ -181,60 +257,4 @@ const foundShape = (fichier) => {
                         break;
                     }
                 }
-            }
-            iCol++;
-            if(data.charCodeAt(i) === 10) {
-                iLine++;
-                iCol=0;
-                console.log("... Saut de Ligne ...");
-            }
-        }
-
-        if(found < currentShape.length) {
-            console.log("Introuvable");
-        }
-    });
-}
-
-// ERRORS
-// PARSING
-let arg = process.argv.slice(2);
-noargs = validateArgs(arg);
-
-// RESULT
-// DISPLAY
-if(noargs) console.warn(msgerr);
-else {
-    // displayFile(arg[0]);
-    // saveFrame(arg[0]);
-    // setTimeout(() => {}, 3000);
-    saveShape(arg[1]);
-    // setTimeout(() => {}, 3000);
-    foundShape(arg[0]);
-}
-/*
-                    for(let i=0; i<frame.length; i++) { // 0 1 2
-
-        for(let j=0; j<frame[i][1]; j++) { // 0 1 2 3
-
-            if(final[i][2] === i && final[i][1] === j) {
-                display += String.fromCharCode(final[i][0]);
-            } else display += "-";
-
-        }
-        display += "\n";
-    }
-                    console.log("k-i =", k-i);
-                    console.log("k-i-1 =", k-i-1);
-                    console.log("currentShape[k-i][2] =", currentShape[k-i][2]);
-                    console.log("currentShape[k-i-1][2] =", currentShape[k-i-1][2]);
-
-                          if(k-i === currentShape[k-i][1] 
-                                && data.charCodeAt(k) === currentShape[k-i][0]) {
-                                    found++;
-                                    console.log("["+k+"]","--> Eureka2!\n["+iCol2+"]["+iLine2+"]");
-                            } else if(k-i === currentShape[k-i][1] 
-                                && data.charCodeAt(k) !== currentShape[k-i][0]) {
-                                    found=0; break;
-                            }
 */
