@@ -10,7 +10,14 @@ let finalShape = [];
 
 // FUNCTIONS
 const validateArgs = (args) => {
-    return (args.length !== 2);
+
+    if(args.length !== 2) return true;
+    else {
+        let errfile1 = tryFile(arg[0]);
+        let errfile2 = tryFile(arg[1]);
+
+        return errfile1 || errfile2;
+    }
 }
 
 // Save perimeter of the board
@@ -90,16 +97,11 @@ const displayShape = (final) => {
 }
 
 // Display file content one by one.
-const displayFile = (fichier) => {
+const tryFile = (fichier) => {
 
-    fs.readFile(fichier, 'utf8', (err, data) => {
-        if(err) console.warn(msgerr);
-
-        for(let i=0; i<data.length; i++) {
-            console.log(i, " - ", data[i], " - charCode :",  data.charCodeAt(i));
-        }
-        console.log(data);
-    });
+    let fileExists = fs.existsSync(fichier);
+    // console.log(fichier," exists:", fileExists);
+    return !fileExists;
 }
 
 // Search shape on the board.
