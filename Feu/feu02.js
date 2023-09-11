@@ -96,7 +96,7 @@ const displayShape = (final) => {
     console.log(display);
 }
 
-// Display file content one by one.
+// Verify existence of a file.
 const tryFile = (fichier) => {
 
     let fileExists = fs.existsSync(fichier);
