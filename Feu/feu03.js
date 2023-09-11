@@ -69,9 +69,66 @@ const displaySudoku = (grid) => {
 }
 
 // Check how much element missing on square. [0..8]
-const checkSquare = (index) => {
+const checkSquare = (griddy) => {
 
-    console.log("checkSquare()");
+    let square = "";
+    let newSquare = "";
+    let temp = "";
+    let newGrid = "";
+    let nb=1;
+    let nb2=1;
+    let nb3=1;
+    let nb4=0;
+    let i=0;
+    let ii=0;
+    let k=0;
+    let kk=0;
+
+    // Transforme les carrés en lignes corrigés.
+    while(k<griddy.length) {
+        i=k;
+        nb2=1;
+        while(nb2<4) {
+            nb=1;
+            for(let j=i; nb<4; j+=10) {
+                square += griddy.charAt(j);
+                square += griddy.charAt(j+1);
+                square += griddy.charAt(j+2);
+                nb++;
+            }
+
+            newSquare = checkLine(square);
+            temp += newSquare;
+
+            square = "";
+            i+=3;
+            nb2++;
+        }
+        k+=griddy.length/3;
+    }
+
+    // Remettre la grille en état.
+    while(kk<temp.length) {
+        ii=kk;
+        nb4=1;
+        while(nb4<4) {
+            nb3=1;
+            for(let m=ii; nb3<4; m+=10) {
+
+                newGrid += temp.charAt(m);
+                newGrid += temp.charAt(m+1);
+                newGrid += temp.charAt(m+2);
+
+                nb3++;
+            }
+            newGrid += '\n';
+            ii+=3;
+            nb4++;
+        }
+        kk+=temp.length/3;
+    }
+
+    return newGrid;
 }
 
 // Returns new grid switching columns into lines.
@@ -179,6 +236,12 @@ const resolveSudoku = (fichier) => {
         }
         // Remettre les colonnes en ligne.
         grid = columnToLine(gridCol);
+
+        // Sécurité, s'il reste des éléments manquants
+        if(dotCounting(grid) > 0) {
+            // Résoudre les 9 premiers carrés.
+            grid = checkSquare(grid);
+        }
 
         displaySudoku(grid);
     });
