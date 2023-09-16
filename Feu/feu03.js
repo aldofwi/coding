@@ -183,7 +183,7 @@ const saveMissingPlaces = (gridInit) => {
     }
 }
 
-// Count number of dots still existing
+// Count number of dots still existing.
 const dotCounting = (gridCurrent) => {
 
     let count=0;
