@@ -6,6 +6,7 @@ const msgerr = "error.";
 
 let nbCar;
 let nblignes;
+const start=5;
 
 // FUNCTIONS
 const validateArgs = (args) => {
@@ -76,10 +77,11 @@ const foundSquare = (fichier) => {
 
     let lineMax = [];
     let colMax = [];
-    let square = 4;
-    let done = false;
+    let square = 5;
+    let done = true;
     let myData = "";
-    let index = 4;
+    let iCol = 21;
+    let iLine = 2;
 
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
@@ -91,52 +93,69 @@ const foundSquare = (fichier) => {
         nblignes = +nblignes;
         
         console.log("-- foundSquare()");
-        console.log("Index = ", index);
         console.log("Nb Lignes = ", nblignes);
         console.log("Nb Caractères = ", nbCar);
+        console.log("iCol = ", iCol);
+        console.log("iLine = ", iLine);
         console.log("-----------------------");
 
-        let nb=1;
-        let startCol=5;
-        let startLine=0;
+        // data.slice(5, data.length);
 
-        for(let j=startLine; j<square; j++) {
-            for(let i=startCol; i<startCol+nbCar; i++) {
-                //console.log(i, " - ", data.charAt(i), " - ", data.charCodeAt(i));
+        let nbSpace=0;
+        let nbL = 0;
+        let nbC = 0;
+
+        // Parcourir TOUT le plateau.
+        for(let i=start; i<data.length; i++) {
+            // Si le nb de lignes ne dépassent pas le carré
+            if(nbL < square+iLine) {
+
                 if(data.charAt(i) === '.') {
-                    if(i>startCol+index) {
-                        lineMax[j] = nb++;
+
+                    if(nbC >= iCol && nbL >= iLine) {
+                        lineMax[nbL] = nbSpace++;
                     }
-                } else if(i>startCol+index) break;
-            }
+                    nbC++;
+                } else if(data.charCodeAt(i) === 10) {
 
-            if(lineMax[j] >= square) done = true;
-            else {
-                done = false;
-                break;
+                    if(nbL >= iLine) {
+                        if(lineMax[nbL] >= square) done = true;
+                        else {
+                            console.log("lineMax[",nbL,"] < square", lineMax[nbL], " --> BREAK;");
+                            done = false;
+                            break;
+                        }
+                    }
+                    nbC=0;
+                    nbL++;
+                    nbSpace=0;
+                } else if(data.charAt(i) === 'x' && nbC >= iCol) {
+                    console.log("x at", i, " --> BREAK;");
+                    done = false;
+                    break;
+                } else {
+                    nbC++;
+                }
             }
-
-            nb=1;
-            startCol+=28;
         }
+        console.log("\nColonnes | Lignes\nnbC =", nbC, "| nbL =", nbL)
+
         console.log(lineMax);
         console.log(done);
 
         if(done) {
             let nbL=0;
             let nbC=0;
-            startCol=5;
-            startLine=0;
+            
             let newLine = "";
 
-            for(let i=startCol; i<data.length; i++) {
+            for(let i=start; i<data.length; i++) {
 
                 if(data.charAt(i) === '.') {
                     
-                    if(nbC>=5 && nbC<square+5 && nbL<square) {
+                    if(nbC>iCol && nbC<=square+iCol && nbL>=iLine && nbL<square+iLine) {
                         newLine += 'o';
                     } else {
-                        //console.log(nbC, " Otherz : ", data.charAt(i));
                         newLine += data.charAt(i);
                     }
                     nbC++;
@@ -145,7 +164,6 @@ const foundSquare = (fichier) => {
                         nbC=0;
                         nbL++;
                     } else nbC++;
-                    //console.log(nbL, " Otherz else : ", data.charAt(i));
                     newLine += data.charAt(i);
                 }
                     
@@ -153,11 +171,17 @@ const foundSquare = (fichier) => {
             myData += newLine;
             newLine = "";
         } else {
-            console.log("Square", square, "noT possibLe at index", index, "!");
+            console.log("Square", square, "noT possibLe at iCol", iCol, " / iline", iLine, "!");
         }
         console.log(myData);
 
     });
+}
+
+const trySquare = (plate) => {
+
+
+
 }
 
 // ERRORS
