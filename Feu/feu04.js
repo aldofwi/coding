@@ -76,12 +76,10 @@ const cardValidity = (dataz) => {
 const foundSquare = (fichier) => {
 
     let lineMax = [];
-    let colMax = [];
-    let square = 5;
+    let biggest = [];
+    let square = 2;
     let done = true;
     let myData = "";
-    let iCol = 21;
-    let iLine = 2;
 
     fs.readFile(fichier, 'utf8', (err, data) => {
         if(err) console.warn(msgerr);
@@ -92,18 +90,19 @@ const foundSquare = (fichier) => {
         }
         nblignes = +nblignes;
         
+        let iCol = 5;
+        let iLine = 6;
+        let nbSpace=0;
+        let nbL = 0;
+        let nbC = 0;
+
         console.log("-- foundSquare()");
         console.log("Nb Lignes = ", nblignes);
         console.log("Nb Caractères = ", nbCar);
         console.log("iCol = ", iCol);
         console.log("iLine = ", iLine);
         console.log("-----------------------");
-
         // data.slice(5, data.length);
-
-        let nbSpace=0;
-        let nbL = 0;
-        let nbC = 0;
 
         // Parcourir TOUT le plateau.
         for(let i=start; i<data.length; i++) {
@@ -129,17 +128,20 @@ const foundSquare = (fichier) => {
                     nbC=0;
                     nbL++;
                     nbSpace=0;
-                } else if(data.charAt(i) === 'x' && nbC >= iCol) {
-                    console.log("x at", i, " --> BREAK;");
-                    done = false;
-                    break;
+                } else if(data.charAt(i) === 'x' && nbC >= iCol && nbL >= iLine) {
+                    if(lineMax[nbL] >= square) done = true;
+                    else {
+                        console.log("x at", i, " --> BREAK;");
+                        done = false;
+                        break;
+                    }
                 } else {
                     nbC++;
                 }
             }
         }
-        console.log("\nColonnes | Lignes\nnbC =", nbC, "| nbL =", nbL)
 
+        console.log("\nColonnes | Lignes\nnbC =", nbC, "| nbL =", nbL)
         console.log(lineMax);
         console.log(done);
 
@@ -153,7 +155,7 @@ const foundSquare = (fichier) => {
 
                 if(data.charAt(i) === '.') {
                     
-                    if(nbC>iCol && nbC<=square+iCol && nbL>=iLine && nbL<square+iLine) {
+                    if(nbC>=iCol && nbC<square+iCol && nbL>=iLine && nbL<square+iLine) {
                         newLine += 'o';
                     } else {
                         newLine += data.charAt(i);
