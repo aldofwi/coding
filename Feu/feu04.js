@@ -75,10 +75,8 @@ const cardValidity = (dataz) => {
 // Search the bigger square.
 const foundSquare = (fichier) => {
 
-    let lineMax = [];
     let biggest = [];
     let square = 2;
-    let done = true;
     let myData = "";
 
     fs.readFile(fichier, 'utf8', (err, data) => {
@@ -90,8 +88,8 @@ const foundSquare = (fichier) => {
         }
         nblignes = +nblignes;
         
-        let iCol = 5;
-        let iLine = 6;
+        let iCol = 0;
+        let iLine = 0;
         let nbSpace=0;
         let nbL = 0;
         let nbC = 0;
@@ -99,56 +97,21 @@ const foundSquare = (fichier) => {
         console.log("-- foundSquare()");
         console.log("Nb Lignes = ", nblignes);
         console.log("Nb Caractères = ", nbCar);
-        console.log("iCol = ", iCol);
-        console.log("iLine = ", iLine);
-        console.log("-----------------------");
         // data.slice(5, data.length);
 
-        // Parcourir TOUT le plateau.
-        for(let i=start; i<data.length; i++) {
-            // Si le nb de lignes ne dépassent pas le carré
-            if(nbL < square+iLine) {
+        biggest = trySquare(data);
 
-                if(data.charAt(i) === '.') {
+        console.log("biggest =", biggest);
+        console.log("-----------------------");
 
-                    if(nbC >= iCol && nbL >= iLine) {
-                        lineMax[nbL] = nbSpace++;
-                    }
-                    nbC++;
-                } else if(data.charCodeAt(i) === 10) {
+        if(biggest[0]) {
 
-                    if(nbL >= iLine) {
-                        if(lineMax[nbL] >= square) done = true;
-                        else {
-                            console.log("lineMax[",nbL,"] < square", lineMax[nbL], " --> BREAK;");
-                            done = false;
-                            break;
-                        }
-                    }
-                    nbC=0;
-                    nbL++;
-                    nbSpace=0;
-                } else if(data.charAt(i) === 'x' && nbC >= iCol && nbL >= iLine) {
-                    if(lineMax[nbL] >= square) done = true;
-                    else {
-                        console.log("x at", i, " --> BREAK;");
-                        done = false;
-                        break;
-                    }
-                } else {
-                    nbC++;
-                }
-            }
-        }
+            square  = biggest[1];
+            iCol    = biggest[2];
+            iLine   = biggest[3]; 
 
-        console.log("\nColonnes | Lignes\nnbC =", nbC, "| nbL =", nbL)
-        console.log(lineMax);
-        console.log(done);
-
-        if(done) {
             let nbL=0;
             let nbC=0;
-            
             let newLine = "";
 
             for(let i=start; i<data.length; i++) {
@@ -172,18 +135,114 @@ const foundSquare = (fichier) => {
             }
             myData += newLine;
             newLine = "";
+            console.log(myData);
+
         } else {
-            console.log("Square", square, "noT possibLe at iCol", iCol, " / iline", iLine, "!");
+            console.log("Biggest Square", square, "noT possibLe at all !\n", data);
         }
-        console.log(myData);
 
     });
 }
 
 const trySquare = (plate) => {
 
+    let obs = false;
+    let bigger = [];    let iCol = 0;   let nbL = 0;
+    let lineMax = [];   let iLine = 0;  let nbC = 0;
+    let done = true;    let nbSpace=0;  let square = 0;
+    
+    // Boucle sur la taille de square
+    for(let k=2; k<=9; k++) {
 
+        done = true;
+        square = k;
+        lineMax = [];
+        nbSpace = 0;  
 
+        // Boucles sur les colonnes & lignes
+        for(let m=0; m<nblignes; m++) {
+            for(let n=0; n<nbCar-1; n++) {
+
+                iCol = n;   nbL = 0;
+                iLine = m;  nbC = 0;
+
+                console.log("iCol = ", iCol); // 11
+                console.log("iLine = ", iLine); // 6
+                console.log("-----------------------");
+
+                // Parcourir TOUT le plateau.
+                for(let i=start; i<plate.length; i++) {
+                    // Si le nb de lignes ne dépassent pas le carré
+                    if(nbL < square+iLine && iLine+square < nblignes) {
+
+                        if(plate.charAt(i) === '.' && !obs) {
+                            
+                            if(nbC >= iCol && nbL >= iLine) {
+                                nbSpace++;
+                                lineMax[nbL] = nbSpace;
+                                console.log("1. first IF - nbC =", nbC, "| nbL =", nbL, "| nbSpace =", nbSpace);
+                            }
+                            nbC++;
+                        } else if(plate.charCodeAt(i) === 10) {
+
+                            if(nbL >= iLine) {
+                                if(lineMax[nbL] >= square) {
+                                    done = true;
+                                } else {
+                                    console.log("2. second IF - lineMax[",nbL,"] < square", lineMax[nbL], " --> BREAK;");
+                                    done = false;
+                                    break;
+                                }
+                            }
+                            nbC=0;
+                            nbL++;
+                            obs = false;
+                            nbSpace=0;
+                            lineMax[nbL]=nbSpace;
+                        } else if(plate.charAt(i) === 'x' && nbC >= iCol && nbL >= iLine) {
+                            if(lineMax[nbL] >= square) {
+                                console.log("3. THIRD IF - lineMax[",nbL,"]", lineMax[nbL]);
+                                nbC=0;
+                                //nbL++;
+                                nbSpace=0;
+                                done = true;
+                                obs = true;
+                                //break;
+                            } else {
+                                console.log("x at", i, " --> BREAK;");
+                                done = false;
+                                break;
+                            }
+                        } else {
+                            nbC++;
+                        }
+                        console.log(i, plate.charAt(i), " - ", lineMax, "- nbC =", nbC, "| nbL =", nbL);
+                        console.log("----------------------------------------------");
+                    } else break; // watch OUT!
+                }
+
+                if(lineMax.length === 0) done = false;
+
+                console.log("\nSquare = ", square, "\nColonnes | Lignes\nnbC =", nbC, "| nbL =", nbL)
+                console.log(lineMax);
+                console.log(done);
+
+                if(done) {
+                    bigger[0] = true;
+                    bigger[1] = square;
+                    bigger[2] = iCol;
+                    bigger[3] = iLine;
+                    break;
+                } else {
+                    console.log("\nSquare ", square, " not possible at iCol", iCol, "/ iLine", iLine, ".");
+                }
+
+            }
+            if(done) break;
+        }
+
+    }
+    return bigger;
 }
 
 // ERRORS
