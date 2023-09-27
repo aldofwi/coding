@@ -64,9 +64,8 @@ const cardValidity = (dataz) => {
             if((tabLignes[m] % tabLignes[0]) !== 0) return false;
         }
 
-        if(j === 0) return false;
         // Si nbLignes annoncé est faux
-        if(j !== +nblignes) return false;
+        if(j === 0 || j !== +nblignes) return false;
 
     return true;
 }
