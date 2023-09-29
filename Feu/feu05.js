@@ -82,7 +82,7 @@ const mapValidity = (dataz) => {
     return true;
 }
 
-// Search the shortest way out.
+// Trouver le plus court parmi les bons chemins.
 const foundShortWay = (fichier) => {
 
     fs.readFile(fichier, 'utf8', (err, data) => {
@@ -95,7 +95,7 @@ const foundShortWay = (fichier) => {
         let iCol = 0;   let entryPos = [];
         let iLine = 0;  let exitPos  = [];
 
-        console.log("\nNb Lignes =", nbLines, "\nNb Colonnes =", nbCol, "\nCaractère plein =", full, "\nCaractère vide =", empty, "\nCaractère chemin =", road, "\nCaractère entrée =", entry, "\nCaractère sortie =", exit);
+        // console.log("\nNb Lignes =", nbLines, "\nNb Colonnes =", nbCol, "\nCaractère plein =", full, "\nCaractère vide =", empty, "\nCaractère chemin =", road, "\nCaractère entrée =", entry, "\nCaractère sortie =", exit);
         console.log('\n'+data.slice(nbCar));
 
         // Repérer les positions entrée & sortie.
@@ -109,21 +109,30 @@ const foundShortWay = (fichier) => {
             } else iCol++;
         }
 
-        console.log(entryPos.length, ". entry =", entryPos[0]); 
-        console.log(exitPos.length, ". exit =", exitPos[1]);
-        exitPoint = foundExitPoint(exitPos[1], data);
-        console.log("0. exitPoint =", exitPoint);
-        
-        let oneWay = tryToFindOut(entryPos[0], data);
+        // Pour chaque entrée, esayer de trouver chaque sortie
+        for(let j=0; j<entryPos.length; j++) {
 
-        console.log(entryPos.length, ". entry =", entryPos[0]); 
-        console.log(exitPos.length, ". exit =", exitPos[1]);
-        //exitPoint = foundExitPoint(exitPos[1], data);
-        console.log("0. exitPoint =", exitPoint);
+            for(let k=0; k<exitPos.length; k++) {
+                exitPoint = foundExitPoint(exitPos[k], data);
+                // console.log(k, ". exitPoint =", exitPoint);
+                wayz = [];
+                tryToFindOut(entryPos[j], data);
+            }
+        }
+
+        // Trier pour trouver le plus court des bons chemins
+        let shortest = 0;
+        for(let i=0; i<goodPaths.length-1; i++) {
+            if(goodPaths[i].length < goodPaths[i+1].length) shortest = i;
+            else shortest = i+1;
+        }
+    
+        drawThatWay(goodPaths[shortest], data);
+        console.log("-- Sortie atteinte en", goodPaths[shortest].length, "coups !");
     });
 }
 
-// Trouver le + court chemin pour atteindre la sortie.
+// Trouver tous les chemins pour atteindre la sortie.
 const tryToFindOut = (comeIn, map) => {
 
     let lastPos = [];
@@ -132,15 +141,12 @@ const tryToFindOut = (comeIn, map) => {
     let currentDir = whereCanIgo(comeIn, currentPos, currentWay, map);
 
     while(currentDir.length > 0) {
-    // while(wayz.length !== 111) {
 
         currentPos = comeIn;
 
         while(!blocked) {
 
             if(currentDir.length > 0) {
-                // console.log("current Dir --> ", currentDir);
-
                 lastPos = currentPos;
                 // currentDir possède plusieurs voies, ATTENTION.
                 currentPos = goThere(currentDir[0], lastPos);
@@ -150,16 +156,16 @@ const tryToFindOut = (comeIn, map) => {
                 //console.log("current pos --> ", currentPos);
                 //console.log("current way --> ", currentWay);
             } else {
-                console.log("--> ! NO DIRECTION !");
+                //console.log("--> ! NO DIRECTION !");
                 break;
             }
             currentDir = whereCanIgo(currentPos, lastPos, currentWay, map);
         }
         wayz.push(currentWay);
-        console.log("Eureka :", eureka, "\nBlocked :", blocked,"\n------------------");
+        // console.log("Eureka :", eureka, "\nBlocked :", blocked,"\n------------------");
         if(eureka) {
             goodPaths.push(currentWay);
-            console.log("--> ! EUREKAAA", goodPaths.length, "!\n------------------");
+            // console.log("--> ! EUREKAAA", goodPaths.length, "!\n------------------");
         }
         blocked = false;
         eureka = false;
@@ -169,14 +175,6 @@ const tryToFindOut = (comeIn, map) => {
         currentDir = whereCanIgo(comeIn, currentPos, currentWay, map);
     }
 
-    console.log(goodPaths.length, "Good wayz : ", goodPaths);
-  
-    for(let i=0; i<goodPaths.length; i++) {
-        console.log("-- draw good waY(",i,"); Size :", goodPaths[i].length);
-        drawThatWay(goodPaths[i], map);
-    }
-    
-    console.log("TOTAL :", wayz.length, "wayz.");
 }
 
 // Passer d'une position à une autre
@@ -189,10 +187,10 @@ const goThere = (direction, lastPosition) => {
         case 'right': curr = [lastPosition[0]+1, lastPosition[1], lastPosition[2]+1]; break;
         case 'up'   : curr = [lastPosition[0], lastPosition[1]-1, lastPosition[2]-nbCar]; break;
         case 'down' : curr = [lastPosition[0]-1, lastPosition[1]+1, lastPosition[2]+nbCar]; break;
-            default : console.log("-- switch OFF !"); break;
+            default : break; // console.log("-- switch OFF !");
     }
 
-    console.log("-- goThere(", curr[2],");");
+    // console.log("-- goThere(", curr[2],");");
     return curr;
 }
 
