@@ -17,6 +17,7 @@ let wayz = []; // 2D Tab
 let exitPoint;
 let eureka = false;
 let blocked = false;
+let goodPaths = [];
 
 // FUNCTIONS
 const validateArgs = (args) => {
@@ -149,8 +150,13 @@ const tryToFindOut = (comeIn, map) => {
             // console.log("current dir --> ", currentDir);
         }
         wayz.push(currentWay);
-        console.log("Eureka :", eureka, "\nBlocked :", blocked,"\n---------------");
+        console.log("Eureka :", eureka, "\nBlocked :", blocked,"\n------------------");
+        if(eureka) {
+            goodPaths.push(currentWay);
+            console.log("--> ! EUREKAAA", goodPaths.length, "!\n------------------");
+        }
         blocked = false;
+        eureka = false;
         lastPos = [];
         currentPos = [];
         currentWay = [];
@@ -161,6 +167,7 @@ const tryToFindOut = (comeIn, map) => {
         drawThatWay(wayz[i], map);
     }
     console.log("wayz : ", wayz);
+    console.log("Good wayz : ", goodPaths);
 }
 
 // Passer d'une position à une autre
@@ -185,45 +192,45 @@ const whereCanIgo = (position, lastPos, currWay, map) => {
 
     let current = currWay;
     let directions = [];
-    console.log("-- whereCanIgo();");
+    console.log("-- whereCanIgo(); current = ", current);
 
     if(position[0] !== 0 && map.charAt(position[2]-1) === ' ' && lastPos[2] !== position[2]-1) {
         if(position[2]-1 === exitPoint[2]) eureka = true;
-        else {
+        
             current.push(position[2]-1);
             if(!didIgo(current)) directions.push('left');
             current.pop();
-        }
+        
     }
 
     if(position[0] !== 9 && map.charAt(position[2]+1) === ' ' && lastPos[2] !== position[2]+1) {
         if(position[2]+1 === exitPoint[2]) eureka = true;
-        else {
+        
             current.push(position[2]+1);
             if(!didIgo(current)) directions.push('right');
             current.pop();
-        }
+        
     }
 
     if(position[1] !== 0 && map.charAt(position[2]-nbCar) === ' ' && lastPos[2] !== position[2]-nbCar) {
         if(position[2]-nbCar === exitPoint[2]) eureka = true;
-        else {
+        
             current.push(position[2]-nbCar);
             if(!didIgo(current)) directions.push('up');
             current.pop();
-        }
+        
     }
 
     if(position[1] !== 9 && map.charAt(position[2]+nbCar) === ' ' && lastPos[2] !== position[2]+nbCar) {
         if(position[2]+nbCar === exitPoint[2]) eureka = true;
-        else {
+        
             current.push(position[2]+nbCar);
             if(!didIgo(current)) directions.push('down');
             current.pop();
-        }
+        
     }
 
-    if(directions.length === 0) blocked = true;
+    if(directions.length === 0 && !eureka) blocked = true;
 
     return directions;
 }
@@ -235,11 +242,14 @@ const didIgo = (thatWay) => {
 
     for(let j=0; j<wayz.length; j++) {
         
-        for(let k=0; k<thatWay.length; k++) {
+        if(wayz[j].length === thatWay.length) {
 
-            if(wayz[j].length === thatWay.length && wayz[j][k] === thatWay[k]) done = true;
-            else done = false; break;
-        }
+            for(let k=0; k<thatWay.length; k++) {
+                console.log("wayz[",j,"][",k,"] === thatWay[",k,"] ? ", wayz[j][k] === thatWay[k]);
+                if(wayz[j][k] === thatWay[k]) done = true;
+                else done = false;
+            }
+        } else done = false;
     }
     console.log("-- didIgo()", thatWay, "done =", done);
     return done;
