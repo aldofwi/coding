@@ -110,12 +110,16 @@ const foundShortWay = (fichier) => {
         }
 
         console.log(entryPos.length, ". entry =", entryPos[0]); 
-        console.log(exitPos.length, ". exit =", exitPos[0]);
-        exitPoint = foundExitPoint(exitPos[0], data);
+        console.log(exitPos.length, ". exit =", exitPos[1]);
+        exitPoint = foundExitPoint(exitPos[1], data);
         console.log("0. exitPoint =", exitPoint);
-        // console.log("\nWhere Can I go ?", whereCanIgo(entryPos[0], entryPos[0], data));
         
         let oneWay = tryToFindOut(entryPos[0], data);
+
+        console.log(entryPos.length, ". entry =", entryPos[0]); 
+        console.log(exitPos.length, ". exit =", exitPos[1]);
+        //exitPoint = foundExitPoint(exitPos[1], data);
+        console.log("0. exitPoint =", exitPoint);
     });
 }
 
@@ -125,29 +129,31 @@ const tryToFindOut = (comeIn, map) => {
     let lastPos = [];
     let currentPos = [];
     let currentWay = [];
-    let currentDir = [];
+    let currentDir = whereCanIgo(comeIn, currentPos, currentWay, map);
 
-    while(wayz.length !== 3) {
+    while(currentDir.length > 0) {
+    // while(wayz.length !== 111) {
 
         currentPos = comeIn;
-        currentDir = whereCanIgo(comeIn, currentPos, currentWay, map);
-    //while(!eureka) {
+
         while(!blocked) {
 
             if(currentDir.length > 0) {
+                // console.log("current Dir --> ", currentDir);
+
                 lastPos = currentPos;
                 // currentDir possède plusieurs voies, ATTENTION.
                 currentPos = goThere(currentDir[0], lastPos);
                 currentWay.push(currentPos[2]);
+                if(eureka) break;
                 //console.log("last pos --> ", lastPos);
                 //console.log("current pos --> ", currentPos);
-                console.log("current way --> ", currentWay);
+                //console.log("current way --> ", currentWay);
             } else {
                 console.log("--> ! NO DIRECTION !");
                 break;
             }
             currentDir = whereCanIgo(currentPos, lastPos, currentWay, map);
-            // console.log("current dir --> ", currentDir);
         }
         wayz.push(currentWay);
         console.log("Eureka :", eureka, "\nBlocked :", blocked,"\n------------------");
@@ -160,14 +166,17 @@ const tryToFindOut = (comeIn, map) => {
         lastPos = [];
         currentPos = [];
         currentWay = [];
-        currentDir = [];
+        currentDir = whereCanIgo(comeIn, currentPos, currentWay, map);
     }
+
+    console.log(goodPaths.length, "Good wayz : ", goodPaths);
   
-    for(let i=0; i<wayz.length; i++) {
-        drawThatWay(wayz[i], map);
+    for(let i=0; i<goodPaths.length; i++) {
+        console.log("-- draw good waY(",i,"); Size :", goodPaths[i].length);
+        drawThatWay(goodPaths[i], map);
     }
-    console.log("wayz : ", wayz);
-    console.log("Good wayz : ", goodPaths);
+    
+    console.log("TOTAL :", wayz.length, "wayz.");
 }
 
 // Passer d'une position à une autre
@@ -179,7 +188,7 @@ const goThere = (direction, lastPosition) => {
         case 'left' : curr = [lastPosition[0]-1, lastPosition[1], lastPosition[2]-1]; break;
         case 'right': curr = [lastPosition[0]+1, lastPosition[1], lastPosition[2]+1]; break;
         case 'up'   : curr = [lastPosition[0], lastPosition[1]-1, lastPosition[2]-nbCar]; break;
-        case 'left' : curr = [lastPosition[0]-1, lastPosition[1]+1, lastPosition[2]+nbCar]; break;
+        case 'down' : curr = [lastPosition[0]-1, lastPosition[1]+1, lastPosition[2]+nbCar]; break;
             default : console.log("-- switch OFF !"); break;
     }
 
@@ -192,42 +201,78 @@ const whereCanIgo = (position, lastPos, currWay, map) => {
 
     let current = currWay;
     let directions = [];
-    console.log("-- whereCanIgo(); current = ", current);
+    // console.log("-- whereCanIgo(); current = ", current);
 
     if(position[0] !== 0 && map.charAt(position[2]-1) === ' ' && lastPos[2] !== position[2]-1) {
-        if(position[2]-1 === exitPoint[2]) eureka = true;
         
+        if(!current.includes(position[2]-1)) {
+            
             current.push(position[2]-1);
-            if(!didIgo(current)) directions.push('left');
+            if(!didIgo(current)) {
+                directions.push('left');
+                if(position[2]-1 === exitPoint[2]) eureka = true;
+            }
             current.pop();
-        
+            if(eureka) {
+                directions = [];
+                directions.push('left');
+                return directions;
+            }
+        }
     }
 
     if(position[0] !== 9 && map.charAt(position[2]+1) === ' ' && lastPos[2] !== position[2]+1) {
-        if(position[2]+1 === exitPoint[2]) eureka = true;
         
+        if(!current.includes(position[2]+1)) {
+            
             current.push(position[2]+1);
-            if(!didIgo(current)) directions.push('right');
+            if(!didIgo(current)) { 
+                directions.push('right');
+                if(position[2]+1 === exitPoint[2]) eureka = true;
+            }
             current.pop();
-        
+            if(eureka) {
+                directions = [];
+                directions.push('right');
+                return directions;
+            }
+        }
     }
 
     if(position[1] !== 0 && map.charAt(position[2]-nbCar) === ' ' && lastPos[2] !== position[2]-nbCar) {
-        if(position[2]-nbCar === exitPoint[2]) eureka = true;
         
+        if(!current.includes(position[2]-nbCar)) {
+            
             current.push(position[2]-nbCar);
-            if(!didIgo(current)) directions.push('up');
+            if(!didIgo(current)) { 
+                directions.push('up');
+                if(position[2]-nbCar === exitPoint[2]) eureka = true;
+            }
             current.pop();
-        
+            if(eureka) {
+                directions = [];
+                directions.push('up');
+                return directions;
+            }
+        }
     }
 
     if(position[1] !== 9 && map.charAt(position[2]+nbCar) === ' ' && lastPos[2] !== position[2]+nbCar) {
-        if(position[2]+nbCar === exitPoint[2]) eureka = true;
         
+        if(!current.includes(position[2]+nbCar)) {
+            
             current.push(position[2]+nbCar);
-            if(!didIgo(current)) directions.push('down');
+            if(!didIgo(current)) { 
+                directions.push('down');
+                if(position[2]+nbCar === exitPoint[2]) eureka = true;
+            }
             current.pop();
-        
+            if(eureka) {
+                directions = [];
+                directions.push('down');
+                return directions;
+            }
+        }
     }
 
     if(directions.length === 0 && !eureka) blocked = true;
@@ -239,19 +284,23 @@ const whereCanIgo = (position, lastPos, currWay, map) => {
 const didIgo = (thatWay) => {
 
     let done = false;
+    // console.log(wayz);
 
     for(let j=0; j<wayz.length; j++) {
         
         if(wayz[j].length === thatWay.length) {
 
             for(let k=0; k<thatWay.length; k++) {
-                console.log("wayz[",j,"][",k,"] === thatWay[",k,"] ? ", wayz[j][k] === thatWay[k]);
-                if(wayz[j][k] === thatWay[k]) done = true;
-                else done = false;
+                // console.log("wayz[",j,"][",k,"] === thatWay[",k,"] ? ", wayz[j][k] === thatWay[k]);
+                if(wayz[j][k] === thatWay[k]) {
+                    done = true;
+                    if(k === thatWay.length-1) break;
+                } else done = false;
             }
         } else done = false;
+        if(done) break;
     }
-    console.log("-- didIgo()", thatWay, "done =", done);
+    //console.log("-- didIgo()", thatWay, "done =", done);
     return done;
 }
 
@@ -279,7 +328,7 @@ const foundExitPoint = (exitPosition, map) => {
 const drawThatWay = (thatWay, map) => {
 
     let theMap = map;
-    console.log("draw that waY --> ", thatWay);
+    // console.log("-- draw that waY(); ");
 
     for(let i=0; i<thatWay.length; i++) {
         theMap = theMap.substring(0, thatWay[i]) + road + theMap.substring(thatWay[i]+1);
