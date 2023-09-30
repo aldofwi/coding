@@ -4,20 +4,12 @@
 const fs = require("fs");
 const msgerr = "error.";
 
-let nbLines;
-let nbCol;
-let nbCar;
-let full;
-let empty;
-let road;
-let entry;
-let exit;
-let wayz = []; // 2D Tab
+let nbLines;    let full;       let entry;
+let nbCol;      let empty;      let exit;
+let nbCar;      let road;       let exitPoint;
 
-let exitPoint;
-let eureka = false;
-let blocked = false;
-let goodPaths = [];
+let wayz = [];          let eureka = false;
+let goodPaths = [];     let blocked = false;
 
 // FUNCTIONS
 const validateArgs = (args) => {
