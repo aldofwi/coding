@@ -117,7 +117,7 @@ const foundShortWay = (fichier) => {
         }
         // Afficher le plus court chemin
         drawThatWay(goodPaths[shortest], data);
-        console.log("-- Sortie atteinte en", goodPaths[shortest].length, "coups !");
+        console.log("--> Sortie atteinte en", goodPaths[shortest].length, "coups !\n");
     });
 }
 
@@ -194,7 +194,7 @@ const whereCanIgo = (position, lastPos, currWay, map) => {
         }
     }
 
-    if(position[0] !== 9 && map.charAt(position[2]+1) === ' ' && lastPos[2] !== position[2]+1) {
+    if(position[0] !== nbCol-1 && map.charAt(position[2]+1) === ' ' && lastPos[2] !== position[2]+1) {
         
         if(!current.includes(position[2]+1)) {
             current.push(position[2]+1);
@@ -228,7 +228,7 @@ const whereCanIgo = (position, lastPos, currWay, map) => {
         }
     }
 
-    if(position[1] !== 9 && map.charAt(position[2]+nbCar) === ' ' && lastPos[2] !== position[2]+nbCar) {
+    if(position[1] !== nbLines-1 && map.charAt(position[2]+nbCar) === ' ' && lastPos[2] !== position[2]+nbCar) {
         
         if(!current.includes(position[2]+nbCar)) {
             current.push(position[2]+nbCar);
@@ -274,10 +274,10 @@ const didIgo = (thatWay) => {
 const foundExitPoint = (exitPosition, map) => {
     // On part du principe qu'il n'y a qu'un point d'accès à la sortie
     let res ;
-    if(     exitPosition[0] !== 0 && map.charAt(exitPosition[2]-1) === ' ') res = 'left';
-    else if(exitPosition[0] !== 9 && map.charAt(exitPosition[2]+1) === ' ') res = 'right';
-    else if(exitPosition[1] !== 0 && map.charAt(exitPosition[2]-nbCar) === ' ') res = 'up';
-    else if(exitPosition[1] !== 9 && map.charAt(exitPosition[2]+nbCar) === ' ') res = 'down';
+    if(     exitPosition[0] !== 0           && map.charAt(exitPosition[2]-1) === ' ') res = 'left';
+    else if(exitPosition[0] !== nbCol-1     && map.charAt(exitPosition[2]+1) === ' ') res = 'right';
+    else if(exitPosition[1] !== 0           && map.charAt(exitPosition[2]-nbCar) === ' ') res = 'up';
+    else if(exitPosition[1] !== nbLines-1   && map.charAt(exitPosition[2]+nbCar) === ' ') res = 'down';
 
     switch(res) {
 
