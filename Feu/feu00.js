@@ -9,11 +9,11 @@ const dash = "-";
 const side = "|";
 
 // FUNCTIONS
-validateArgs = (args) => { 
+const validateArgs = (args) => { 
     return (args.length !== 2 || isNaN(arg[0]) || isNaN(arg[1])); 
 }
 
-displayRectangle = (elements, lines) => {
+const displayRectangle = (elements, lines) => {
 
     for(let i=0; i<lines; i++) {
         // Si première ou dernière ligne, on met les bords.
