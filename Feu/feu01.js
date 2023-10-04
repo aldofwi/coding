@@ -7,11 +7,11 @@ let noargs = false;
 let result = "";
 
 // FUNCTIONS
-validateArgs = (args) => {
+const validateArgs = (args) => {
     return (args.length < 1); 
 }
 
-calculate2Nb = (nb1, operation, nb2) => {
+const calculate2Nb = (nb1, operation, nb2) => {
 
     switch(operation) {
         case "+" : return nb1 + nb2;
@@ -23,7 +23,7 @@ calculate2Nb = (nb1, operation, nb2) => {
     }
 }
 
-getNbOp = (formule) => {
+const getNbOp = (formule) => {
 
     let nb = 0;
     if(!noargs) {
@@ -40,18 +40,15 @@ getNbOp = (formule) => {
     }   
 }
 
-calculatePriority = (formule) => {
-
-    let num1 = "";
-    let num2 = "";
-    let nbOp = 0;
-    let mark = 0;
+const calculatePriority = (formule) => {
     let res = 0;
-    let indexIn = 0;
-    let indexOut = 0;
-    let indexOpen = 0;
-    let indexClosed = 0;
 
+    let num1 = "";  let nbOp = 0;
+    let num2 = "";  let mark = 0;
+
+    let indexIn = 0;    let indexOpen = 0;
+    let indexOut = 0;   let indexClosed = 0;
+    
     nbOp = getNbOp(formule);
 
     while(nbOp > 0) {
