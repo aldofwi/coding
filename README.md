@@ -26,7 +26,7 @@ In the project directory, you can do whatever you want.
 
 ## Learn More 📥
 
-Following is the Best way to learn.
+Inspiring is the Best way to learn. Don't copy.
 
 ## Fact ♻️
 
