@@ -1,6 +1,6 @@
 # Les Epreuves 🔤
 
-🛵 Epreuves Coding Accelerator 🥢
+🛵 Coding Accelerator 🥢
 
 <a href="https://npmcharts.com">
     <img src="https://img.shields.io/badge/-npmcharts-red" alt="npmcharts.com Overview" />
@@ -14,7 +14,7 @@
 
 
 ## Coding 💻
-Epreuves Coding Accelerator 
+Epreuves : Coding Accelerator 
 
 ## Description 📝
 
