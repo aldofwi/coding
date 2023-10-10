@@ -1,3 +1,25 @@
 .App {
-  text-align: center;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.main {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+}
+
+.inputArea {
+  display: grid;
+  grid-template-columns: 200px 100px;
+  grid-column-gap: 10px;
+}
+
+.fail {
+  color: red;
+}
+
+.success {
+  color: green;
 }
