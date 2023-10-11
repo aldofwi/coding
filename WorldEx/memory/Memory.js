@@ -39,7 +39,7 @@ const Memory = () => {
               setRevealedGrid([...newRevealedGrid]);
             }, 1000)
           } else {
-            // Check if everything has been revealed.
+            // Check if everything has been revealed. Flat() pr passer 2D à 1D.
             const hasWon = revealedGrid.flat().every((isRevealed) => isRevealed);
             if(hasWon) {
               setTimeout(() => {
