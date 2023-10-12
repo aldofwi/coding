@@ -56,7 +56,7 @@ const Memory = () => {
     }
 
   return(
-    <div className="App">
+    <div className="memory">
       <div className="grid">
     
       {grid.map((row, rowIndex) => (
